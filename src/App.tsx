@@ -25,9 +25,9 @@ export default function App() {
       const opt = {
         margin:       0,
         filename:     'AudioVitality_Scientific_Evidence.pdf',
-        image:        { type: 'jpeg' as const, quality: 0.98 },
+        image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' as const },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak:    { mode: 'css' }
       };
       
@@ -44,9 +44,9 @@ export default function App() {
     <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-hidden">
       {/* Ambient Background */}
       <div className="fixed inset-0 z-0 pointer-events-none no-print">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#93c5fd33] blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#d8b4fe33] blur-[120px]"></div>
-        <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-[#fed7aa33] blur-[120px]"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-300/20 blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-300/20 blur-[120px]"></div>
+        <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-orange-200/20 blur-[120px]"></div>
       </div>
       <div className="relative z-10">
       
@@ -54,7 +54,7 @@ export default function App() {
       <button 
         onClick={handleDownloadPdf}
         disabled={isGenerating}
-        className="fixed bottom-8 right-8 bg-[#1d1d1f] text-white p-4 rounded-full shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] hover:bg-black transition-all z-50 no-print flex items-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
+        className="fixed bottom-8 right-8 bg-[#1d1d1f] text-white p-4 rounded-full shadow-2xl hover:bg-black transition-all z-50 no-print flex items-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap font-medium">
@@ -78,7 +78,7 @@ export default function App() {
               return (
                 <div 
                   key={i} 
-                  className="w-1.5 rounded-full bg-[linear-gradient(to_top,#3b82f6,#c084fc,#fb923c)]" 
+                  className="w-1.5 rounded-full bg-gradient-to-t from-blue-500 via-purple-400 to-orange-400" 
                   style={{ height: `${height}px`, opacity: Math.random() * 0.5 + 0.3 }}
                 />
               );
@@ -88,7 +88,7 @@ export default function App() {
           <h2 className="text-6xl font-bold tracking-tight text-[#1d1d1f] mb-2 relative z-10">
             AudioVitality
           </h2>
-          <h2 className="text-6xl font-bold tracking-tight text-transparent bg-clip-text bg-[linear-gradient(to_right,#2563eb,#a855f7,#f97316)] mb-6 relative z-10 pb-2">
+          <h2 className="text-6xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-orange-500 mb-6 relative z-10 pb-2">
             Scientific Evidence
           </h2>
           <p className="text-xl text-[#515154] font-medium max-w-3xl mx-auto relative z-10">
@@ -226,7 +226,7 @@ export default function App() {
               This layered regulatory approach enables AudioVitality to scale commercially today while progressively unlocking higher-value clinical applications as evidence accumulates.
             </p>
 
-            <div className="bg-white p-8 rounded-2xl mt-10 border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+            <div className="bg-white p-8 rounded-2xl mt-10 border border-gray-100 shadow-sm">
               <h4 className="font-serif text-xl font-semibold text-[#1d1d1f] mb-3">Positioning Summary</h4>
               <p className="text-[#515154]">
                 AudioVitality therefore follows a regulatory optionality strategy: enabling immediate commercial deployment in performance and wellbeing markets while progressively building the clinical evidence required for regulated medical indications.
@@ -311,7 +311,7 @@ export default function App() {
               In collaboration with CHUV (Lausanne University Hospital) and UNIL (University of Lausanne), we conducted the first randomized controlled trial on our technology. Results published in Frontiers in Sports and Active Living (June 2025) demonstrate exceptional parasympathetic activation after a single 40-minute session.
             </p>
             
-            <div className="bg-white p-6 rounded-2xl mt-6 border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+            <div className="bg-white p-6 rounded-2xl mt-6 border border-gray-100 shadow-sm">
               <h5 className="font-semibold text-[#1d1d1f] mb-4">Study Design (Hauser et al., 2025)</h5>
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>Design: Randomised, within-subject crossover</li>
@@ -367,7 +367,7 @@ export default function App() {
             </p>
             
             <div className="grid grid-cols-2 gap-8 mt-8">
-              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 <h5 className="font-semibold text-[#1d1d1f] mb-4">Study design</h5>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>N = 8 healthy adults.</li>
@@ -376,7 +376,7 @@ export default function App() {
                   <li>Measurement: MOXY Monitor (NIRS) on vastus lateralis.</li>
                 </ul>
               </div>
-              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 <h5 className="font-semibold text-[#1d1d1f] mb-4">Results</h5>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li><span className="font-semibold text-[#1d1d1f]">+10% to +15% SmO₂ increase</span> during AudioVitality vs. baseline.</li>
@@ -442,7 +442,7 @@ export default function App() {
               This study confirmed long-term benefits: players using AudioVitality maintained a <span className="font-semibold text-[#1d1d1f]">+12% HRV advantage</span> versus controls across the mid-season period.
             </p>
 
-            <div className="bg-white p-6 rounded-2xl mt-6 border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+            <div className="bg-white p-6 rounded-2xl mt-6 border border-gray-100 shadow-sm">
               <h5 className="font-semibold text-[#1d1d1f] mb-4">Study design - Comparative observational</h5>
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>AudioVitality group: 19 players (1 session/week).</li>
@@ -472,7 +472,7 @@ export default function App() {
               We tracked 8 professional players across an entire season, combining HRV, sleep, and match-day fatigue to assess long-term effects.
             </p>
             <div className="grid grid-cols-2 gap-8 mt-6">
-              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 <h5 className="font-semibold text-[#1d1d1f] mb-4">Acute (per session):</h5>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>+25% HRV increase after session.</li>
@@ -480,7 +480,7 @@ export default function App() {
                   <li>-25% perceived fatigue during the match.</li>
                 </ul>
               </div>
-              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 <h5 className="font-semibold text-[#1d1d1f] mb-4">Chronic (season-long):</h5>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>Consistent improvements after each session.</li>
@@ -580,7 +580,7 @@ export default function App() {
           <h3 className="text-sm font-bold mb-10 text-[#86868b] uppercase tracking-widest">Next-generation clinical protocols</h3>
 
           <div className="space-y-10">
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">Corporate Stress Management RCT</h4>
               <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Workplace Burnout Prevention: The Corporate De-Stress Trial</p>
               <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
@@ -591,7 +591,7 @@ export default function App() {
               </ul>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">Autoimmune Disease Pilot - Systemic Sclerosis</h4>
               <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Systemic Sclerosis: Targeting Microcirculation & Inflammation</p>
               <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
@@ -601,7 +601,7 @@ export default function App() {
               </ul>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">DOMS Recovery Study – Exercise-Induced Muscle Damage</h4>
               <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Accelerating Recovery from Delayed Onset Muscle Soreness</p>
               <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">

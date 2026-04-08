@@ -17,7 +17,7 @@ export const EvidenceGrid = ({ data }: { data: any[] }) => {
       {data.map((item, i) => {
         const { icon: Icon, color, bg, border } = getStatusConfig(item.status);
         return (
-          <div key={i} className={`p-5 rounded-2xl border ${border} bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] flex flex-col relative overflow-hidden group`}>
+          <div key={i} className={`p-5 rounded-2xl border ${border} bg-white shadow-sm flex flex-col relative overflow-hidden group`}>
             <div className={`absolute top-0 right-0 w-32 h-32 rounded-bl-full opacity-30 ${bg} -z-10 transition-transform group-hover:scale-110`} />
             
             <div className="flex justify-between items-start mb-3 gap-2">

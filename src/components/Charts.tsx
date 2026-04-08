@@ -11,18 +11,18 @@ export const ModalityChart = () => {
   ];
 
   return (
-    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100">
+    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">HRV Response by Recovery Modality</h4>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 60, left: 80, bottom: 5 }}>
           <defs>
             <linearGradient id="avGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stopColor="#3b82f6" />
-              <stop offset="1" stopColor="#8b5cf6" />
+              <stop offset="0%" stopColor="#3b82f6" />
+              <stop offset="100%" stopColor="#8b5cf6" />
             </linearGradient>
             <linearGradient id="grayGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stopColor="#e5e7eb" />
-              <stop offset="1" stopColor="#d1d5db" />
+              <stop offset="0%" stopColor="#e5e7eb" />
+              <stop offset="100%" stopColor="#d1d5db" />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
@@ -55,18 +55,18 @@ export const StudiesChart = () => {
   ];
 
   return (
-    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100">
+    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">HRV Improvement Across Completed Studies</h4>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 30, right: 0, left: -20, bottom: 20 }}>
           <defs>
             <linearGradient id="avGradientVert" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#3b82f6" />
-              <stop offset="1" stopColor="#8b5cf6" />
+              <stop offset="0%" stopColor="#3b82f6" />
+              <stop offset="100%" stopColor="#8b5cf6" />
             </linearGradient>
             <linearGradient id="grayGradientVert" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#9ca3af" />
-              <stop offset="1" stopColor="#d1d5db" />
+              <stop offset="0%" stopColor="#9ca3af" />
+              <stop offset="100%" stopColor="#d1d5db" />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -116,18 +116,18 @@ export const PilotChart = () => {
   ];
 
   return (
-    <div className="h-[240px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100">
+    <div className="h-[240px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">Airline Pilot Case Study — 4-Week With vs. Without App</h4>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 50, left: 120, bottom: 5 }}>
           <defs>
             <linearGradient id="posGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stopColor="#3b82f6" />
-              <stop offset="1" stopColor="#8b5cf6" />
+              <stop offset="0%" stopColor="#3b82f6" />
+              <stop offset="100%" stopColor="#8b5cf6" />
             </linearGradient>
             <linearGradient id="negGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stopColor="#f97316" />
-              <stop offset="1" stopColor="#ef4444" />
+              <stop offset="0%" stopColor="#f97316" />
+              <stop offset="100%" stopColor="#ef4444" />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />

@@ -51,38 +51,22 @@ export default function App() {
       </div>
       <div className="relative z-10">
       
-      <div ref={contentRef} className="pdf-content-wrapper">
+      <div ref={contentRef} className="pdf-content-wrapper max-w-4xl mx-auto px-6 py-12 space-y-16">
 
-      {/* Page 1: Intro */}
-      <A4Page pageNumber={1} className="bg-[#fbfbfd]">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1d1d1f 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+      {/* Intro */}
+      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
         <Header />
         
-        <div className="relative text-center mt-16 mb-20 py-12">
-          {/* Audio Bars Background */}
-          <div className="absolute inset-0 flex justify-center items-center gap-[3px] opacity-30 pointer-events-none">
-            {[...Array(50)].map((_, i) => {
-              const height = Math.sin(i * 0.2) * 40 + Math.random() * 20 + 20;
-              return (
-                <div 
-                  key={i} 
-                  className="w-1.5 rounded-full bg-gradient-to-t from-blue-500 via-purple-400 to-orange-400" 
-                  style={{ height: `${height}px`, opacity: Math.random() * 0.5 + 0.3 }}
-                />
-              );
-            })}
-          </div>
-          
-          <MainLogo className="w-full max-w-2xl mx-auto relative z-10" />
-          <p className="text-xl text-[#515154] font-medium max-w-3xl mx-auto relative z-10 mt-6">
+        <div className="relative text-center mt-12 mb-16 py-8">
+          <MainLogo className="w-full max-w-xl mx-auto" />
+          <p className="text-xl text-[#515154] font-medium max-w-2xl mx-auto mt-6">
             Science-backed low-frequency technology for recovery, performance, and wellbeing.
           </p>
         </div>
         
-        <section className="mb-8">
-          <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Introduction</h2>
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+        <section>
+          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Introduction</h2>
+          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
             <p>
               AudioVitality is a Swiss-developed technology platform that uses precision low-frequency sound vibrations to help the body recover faster, reduce stress, and improve sleep. Our mission is to make nervous-system recovery measurable, repeatable, and scalable across sport, corporate wellbeing, and longevity markets.
             </p>
@@ -101,14 +85,13 @@ export default function App() {
             </p>
           </div>
         </section>
-      </A4Page>
+      </section>
 
-      {/* Page 2 */}
-      <A4Page pageNumber={2}>
-        <Header />
-        <section className="mb-8">
-          <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Translational Research & Regulatory Optionality</h2>
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+      {/* Translational Research */}
+      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+        <section>
+          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Translational Research & Regulatory Optionality</h2>
+          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
             <p>
               Beyond its current positioning in performance, recovery, and autonomic regulation, AudioVitality is progressively building a translational research pathway aimed at exploring regulated medical indications.
             </p>
@@ -135,7 +118,7 @@ export default function App() {
             </p>
           </div>
         </section>
-      </A4Page>
+      </section>
 
       {/* Page 3 */}
       <A4Page pageNumber={3}>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const MainLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 600 120" className={className} xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 700 120" className={className} xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="main-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 1 }} />

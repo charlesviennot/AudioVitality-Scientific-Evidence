@@ -19,7 +19,9 @@
   }
   section, .pdf-page-break {
     break-inside: avoid;
+    page-break-inside: avoid;
     break-after: always;
+    page-break-after: always;
   }
 }
 

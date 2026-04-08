@@ -32,7 +32,7 @@ export default function App() {
         pagebreak:    { mode: 'css' }
       };
       
-      await html2pdf().set(opt).from(element).save();
+      await html2pdf().set(opt as any).from(element).save();
     } catch (error) {
       console.error("Error generating PDF:", error);
     } finally {
@@ -63,7 +63,7 @@ export default function App() {
         </span>
       </button>
 
-      <div ref={contentRef} className="pdf-content-wrapper">
+      <div ref={contentRef} className="pdf-content-wrapper flex flex-col gap-8">
 
       {/* Page 1: Intro */}
       <A4Page pageNumber={1} className="bg-[#fbfbfd]">
@@ -71,7 +71,7 @@ export default function App() {
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1d1d1f 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
         <Header />
         
-        <div className="relative text-center mt-16 mb-20 py-12">
+        <div className="relative text-center mt-4 mb-20 py-12">
           {/* Audio Bars Background */}
           <div className="absolute inset-0 flex justify-center items-center gap-[3px] opacity-30 pointer-events-none">
             {[...Array(50)].map((_, i) => {

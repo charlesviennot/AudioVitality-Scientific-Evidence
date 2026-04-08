@@ -1,7 +1,5 @@
 import React from 'react';
-import { Download, Loader2 } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { A4Page } from './components/A4Page';
 import { Header } from './components/Header';
 import { MainLogo } from './components/MainLogo';
@@ -10,36 +8,7 @@ import { ModalityChart, StudiesChart, PilotChart } from './components/Charts';
 import { tableDataPart1, tableDataPart2, tableDataPart3 } from './data/tables';
 
 export default function App() {
-  const [isGenerating, setIsGenerating] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const handleDownloadPdf = async () => {
-    if (!contentRef.current) return;
-    
-    setIsGenerating(true);
-    
-    // Add a class to body to trigger PDF-specific styles
-    document.body.classList.add('pdf-exporting');
-    
-    try {
-      const element = contentRef.current;
-      const opt = {
-        margin:       [10, 10, 10, 10], // Add small margins to prevent edge clipping
-        filename:     'AudioVitality_Scientific_Evidence.pdf',
-        image:        { type: 'png' as const, quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false, scrollY: 0 },
-        jsPDF:        { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const },
-        pagebreak:    { mode: ['css', 'legacy'], avoid: '.pdf-page-break' }
-      };
-      
-      await html2pdf().set(opt).from(element).save();
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      document.body.classList.remove('pdf-exporting');
-      setIsGenerating(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-hidden">
@@ -51,22 +20,38 @@ export default function App() {
       </div>
       <div className="relative z-10">
       
-      <div ref={contentRef} className="pdf-content-wrapper max-w-4xl mx-auto px-6 py-12 space-y-16">
+      <div ref={contentRef} className="pdf-content-wrapper">
 
-      {/* Intro */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+      {/* Page 1: Intro */}
+      <A4Page pageNumber={1} className="bg-[#fbfbfd]">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1d1d1f 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
         <Header />
         
-        <div className="relative text-center mt-12 mb-16 py-8">
-          <MainLogo className="w-full max-w-xl mx-auto" />
-          <p className="text-xl text-[#515154] font-medium max-w-2xl mx-auto mt-6">
+        <div className="relative text-center mt-16 mb-20 py-12">
+          {/* Audio Bars Background */}
+          <div className="absolute inset-0 flex justify-center items-center gap-[3px] opacity-30 pointer-events-none">
+            {[...Array(50)].map((_, i) => {
+              const height = Math.sin(i * 0.2) * 40 + Math.random() * 20 + 20;
+              return (
+                <div 
+                  key={i} 
+                  className="w-1.5 rounded-full bg-gradient-to-t from-blue-500 via-purple-400 to-orange-400" 
+                  style={{ height: `${height}px`, opacity: Math.random() * 0.5 + 0.3 }}
+                />
+              );
+            })}
+          </div>
+          
+          <MainLogo className="w-full max-w-2xl mx-auto relative z-10" />
+          <p className="text-xl text-[#515154] font-medium max-w-3xl mx-auto relative z-10 mt-6">
             Science-backed low-frequency technology for recovery, performance, and wellbeing.
           </p>
         </div>
         
-        <section>
-          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Introduction</h2>
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
+        <section className="mb-8">
+          <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Introduction</h2>
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
             <p>
               AudioVitality is a Swiss-developed technology platform that uses precision low-frequency sound vibrations to help the body recover faster, reduce stress, and improve sleep. Our mission is to make nervous-system recovery measurable, repeatable, and scalable across sport, corporate wellbeing, and longevity markets.
             </p>
@@ -85,13 +70,14 @@ export default function App() {
             </p>
           </div>
         </section>
-      </section>
+      </A4Page>
 
-      {/* Translational Research */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-        <section>
-          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Translational Research & Regulatory Optionality</h2>
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
+      {/* Page 2 */}
+      <A4Page pageNumber={2}>
+        <Header />
+        <section className="mb-8">
+          <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Translational Research & Regulatory Optionality</h2>
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
             <p>
               Beyond its current positioning in performance, recovery, and autonomic regulation, AudioVitality is progressively building a translational research pathway aimed at exploring regulated medical indications.
             </p>
@@ -118,13 +104,14 @@ export default function App() {
             </p>
           </div>
         </section>
-      </section>
+      </A4Page>
 
-      {/* Regulatory Strategy */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-        <section>
-          <h3 className="text-2xl font-serif font-semibold mb-6 text-[#1d1d1f]">Regulatory Optionality Strategy</h3>
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
+      {/* Page 3 */}
+      <A4Page pageNumber={3}>
+        <Header />
+        <section className="mb-8">
+          <h3 className="text-2xl font-serif font-semibold mb-4 text-[#1d1d1f]">Regulatory Optionality Strategy</h3>
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
             <p>
               AudioVitality follows a dual-track development strategy designed to balance immediate commercial deployment with long-term clinical validation.
             </p>
@@ -161,120 +148,7 @@ export default function App() {
             </p>
           </div>
         </section>
-      </section>
-
-      {/* Regulatory Pathways */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-        <section>
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
-            <h4 className="font-semibold text-lg text-[#1d1d1f]">Indication-Specific Regulatory Pathways</h4>
-            <p>
-              Where sufficient clinical evidence emerges, AudioVitality may pursue regulatory approval for specific medical indications through established frameworks such as:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>European Medical Device Regulation (MDR)</li>
-              <li>U.S. FDA 510(k) or De Novo pathways</li>
-            </ul>
-            <p>
-              Regulatory certification would apply to specific therapeutic claims, while the broader platform can continue operating within performance and wellbeing markets.
-            </p>
-
-            <h4 className="font-semibold text-lg text-[#1d1d1f] mt-8">Platform Strategy</h4>
-            <p>
-              The long-term vision is to establish AudioVitality as a physiological modulation platform, capable of supporting both:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Performance and recovery applications</li>
-              <li>Regulated medical indications</li>
-            </ul>
-            <p className="mt-6">
-              This layered regulatory approach enables AudioVitality to scale commercially today while progressively unlocking higher-value clinical applications as evidence accumulates.
-            </p>
-
-            <div className="bg-gray-50 p-8 rounded-2xl mt-10 border border-gray-100">
-              <h4 className="font-serif text-xl font-semibold text-[#1d1d1f] mb-3">Positioning Summary</h4>
-              <p className="text-[#515154]">
-                AudioVitality therefore follows a regulatory optionality strategy: enabling immediate commercial deployment in performance and wellbeing markets while progressively building the clinical evidence required for regulated medical indications.
-              </p>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      {/* Evidence */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-        <section>
-          <h2 className="text-3xl font-serif font-semibold mb-2 text-[#1d1d1f]">Publications & Data Summary</h2>
-          <h3 className="text-xs font-bold mb-8 text-[#86868b] uppercase tracking-widest">Scientific Evidence White Paper — February 2026</h3>
-          
-          <EvidenceGrid data={[...tableDataPart1, ...tableDataPart2.slice(0, 2)]} />
-          <div className="mt-8">
-            <EvidenceGrid data={[...tableDataPart2.slice(2), ...tableDataPart3]} />
-          </div>
-        </section>
-      </section>
-
-      {/* Appendix A */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-        <section>
-          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Appendix A – Scientific & Clinical Evidence White Paper</h2>
-          <h3 className="text-xl font-semibold mb-4 text-[#1d1d1f]">A1. Scientific Foundation</h3>
-          
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
-            <h4 className="font-semibold text-[#1d1d1f]">How Low-Frequency Vibroacoustic Stimulation Acts on the Body</h4>
-            <p>
-              AudioVitality was developed from a simple but rigorous hypothesis: sound can function as a precise physiological intervention.
-            </p>
-            <p>
-              Over 15+ years of research and development in Switzerland, AudioVitality Sounds® technology has been engineered to deliver targeted low-frequency vibroacoustic stimulation (40–80 Hz) in a controlled and reproducible manner.
-            </p>
-            <p>
-              Low-frequency vibration activates cutaneous mechanoreceptors (including Meissner and Merkel corpuscles) and stimulates vagal pathways. This mechanical input is translated into measurable parasympathetic activation, reflected by increases in Heart Rate Variability (HRV), a recognized biomarker of autonomic balance and recovery readiness.
-            </p>
-
-            <h4 className="font-semibold text-[#1d1d1f] mt-8">Mechanism of Action</h4>
-            <ol className="list-decimal pl-6 space-y-3">
-              <li><strong>Mechanical stimulation:</strong> 40–80 Hz vibrations activate somatosensory receptors within skin and soft tissue.</li>
-              <li><strong>Neural transmission:</strong> Signals propagate via spinal pathways to the brainstem and cortical structures.</li>
-              <li><strong>Autonomic modulation:</strong> Vagal activation promotes parasympathetic dominance.</li>
-              <li><strong>Physiological outcome:</strong> Increased HRV, Reduced sympathetic tone, Enhanced recovery markers.</li>
-            </ol>
-
-            <h4 className="font-semibold text-[#1d1d1f] mt-8">Key Differentiators</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Harmonic distortion layering to generate specific neural electrical responses</li>
-              <li>Binaural entrainment components supporting auditory–neural synchronisation</li>
-            </ul>
-          </div>
-        </section>
-      </section>
-
-      {/* Appendix A2 */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-        <section>
-          <h3 className="text-xl font-semibold mb-2 text-[#1d1d1f]">A2. Completed Studies</h3>
-          <p className="text-xs text-[#86868b] mb-6 font-medium uppercase tracking-widest">From Laboratory Proof-of-Concept to Real-World Validation</p>
-          
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
-            <h4 className="font-semibold text-lg text-[#1d1d1f]">A2.1 Randomised Controlled Trial (CHUV / UNIL) – Published</h4>
-            <p>
-              In collaboration with CHUV (Lausanne University Hospital) and UNIL (University of Lausanne), we conducted the first randomized controlled trial on our technology. Results published in Frontiers in Sports and Active Living (June 2025) demonstrate exceptional parasympathetic activation after a single 40-minute session.
-            </p>
-            
-            <div className="bg-gray-50 p-6 rounded-2xl mt-6 border border-gray-100">
-              <h5 className="font-semibold text-[#1d1d1f] mb-4">Study Design (Hauser et al., 2025)</h5>
-              <ul className="list-disc pl-6 space-y-2 text-sm">
-                <li>Design: Randomised, within-subject crossover</li>
-                <li>N = 27 healthy, physically active men (18–40 years)</li>
-                <li>Intervention: 40-minute LFV session (40–80 Hz fundamentals + harmonics)</li>
-                <li>Control: no-vibration (silence) condition in identical environment</li>
-                <li>Measurements: Polar H10 + Kubios HRV analysis at 6 time points</li>
-                <li>Primary endpoints: LnRMSSD, (LF+HF)/HR ratio</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </section>
+      </A4Page>
 
       {/* Page 4 */}
       <A4Page pageNumber={4}>

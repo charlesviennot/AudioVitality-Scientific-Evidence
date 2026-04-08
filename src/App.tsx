@@ -1,72 +1,59 @@
 import React from 'react';
-import { Download, Loader2 } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { A4Page } from './components/A4Page';
 import { Header } from './components/Header';
 import { MainLogo } from './components/MainLogo';
 import { EvidenceGrid } from './components/EvidenceGrid';
 import { ModalityChart, StudiesChart, PilotChart } from './components/Charts';
 import { tableDataPart1, tableDataPart2, tableDataPart3 } from './data/tables';
+import { AuthGate } from './components/AuthGate';
 
 export default function App() {
-  const [isGenerating, setIsGenerating] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const handleDownloadPdf = async () => {
-    if (!contentRef.current) return;
-    
-    setIsGenerating(true);
-    
-    // Add a class to body to trigger PDF-specific styles
-    document.body.classList.add('pdf-exporting');
-    
-    try {
-      const element = contentRef.current;
-      const opt = {
-        margin:       [10, 10, 10, 10], // Add small margins to prevent edge clipping
-        filename:     'AudioVitality_Scientific_Evidence.pdf',
-        image:        { type: 'png' as const, quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false, scrollY: 0 },
-        jsPDF:        { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const },
-        pagebreak:    { mode: ['css', 'legacy'], avoid: '.pdf-page-break' }
-      };
-      
-      await html2pdf().set(opt).from(element).save();
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      document.body.classList.remove('pdf-exporting');
-      setIsGenerating(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-hidden">
-      {/* Ambient Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none no-print">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(147,197,253,0.2)] blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(216,180,254,0.2)] blur-[120px]"></div>
-        <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-[rgba(254,215,170,0.2)] blur-[120px]"></div>
-      </div>
-      <div className="relative z-10">
-      
-      <div ref={contentRef} className="pdf-content-wrapper max-w-4xl mx-auto px-6 py-12 space-y-16">
+    <AuthGate>
+      <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-hidden">
+        {/* Ambient Background */}
+        <div className="fixed inset-0 z-0 pointer-events-none no-print">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(147,197,253,0.2)] blur-[120px]"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(216,180,254,0.2)] blur-[120px]"></div>
+          <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-[rgba(254,215,170,0.2)] blur-[120px]"></div>
+        </div>
+        <div className="relative z-10">
+        
+        <div ref={contentRef} className="pdf-content-wrapper">
 
-      {/* Intro */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+      {/* Page 1: Intro */}
+      <A4Page pageNumber={1} className="bg-[#fbfbfd]">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1d1d1f 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
         <Header />
         
-        <div className="relative text-center mt-12 mb-16 py-8">
-          <MainLogo className="w-full max-w-xl mx-auto" />
-          <p className="text-xl text-[#515154] font-medium max-w-2xl mx-auto mt-6">
+        <div className="relative text-center mt-16 mb-20 py-12">
+          {/* Audio Bars Background */}
+          <div className="absolute inset-0 flex justify-center items-center gap-[3px] opacity-30 pointer-events-none">
+            {[...Array(50)].map((_, i) => {
+              const height = Math.sin(i * 0.2) * 40 + Math.random() * 20 + 20;
+              return (
+                <div 
+                  key={i} 
+                  className="w-1.5 rounded-full bg-gradient-to-t from-blue-500 via-purple-400 to-orange-400" 
+                  style={{ height: `${height}px`, opacity: Math.random() * 0.5 + 0.3 }}
+                />
+              );
+            })}
+          </div>
+          
+          <MainLogo className="w-full max-w-2xl mx-auto relative z-10" />
+          <p className="text-xl text-[#515154] font-medium max-w-3xl mx-auto relative z-10 mt-6">
             Science-backed low-frequency technology for recovery, performance, and wellbeing.
           </p>
         </div>
         
-        <section>
-          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Introduction</h2>
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
+        <section className="mb-8">
+          <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Introduction</h2>
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
             <p>
               AudioVitality is a Swiss-developed technology platform that uses precision low-frequency sound vibrations to help the body recover faster, reduce stress, and improve sleep. Our mission is to make nervous-system recovery measurable, repeatable, and scalable across sport, corporate wellbeing, and longevity markets.
             </p>
@@ -85,13 +72,14 @@ export default function App() {
             </p>
           </div>
         </section>
-      </section>
+      </A4Page>
 
-      {/* Translational Research */}
-      <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-        <section>
-          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Translational Research & Regulatory Optionality</h2>
-          <div className="space-y-5 text-[16px] leading-relaxed text-[#515154]">
+      {/* Page 2 */}
+      <A4Page pageNumber={2}>
+        <Header />
+        <section className="mb-8">
+          <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Translational Research & Regulatory Optionality</h2>
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
             <p>
               Beyond its current positioning in performance, recovery, and autonomic regulation, AudioVitality is progressively building a translational research pathway aimed at exploring regulated medical indications.
             </p>
@@ -118,7 +106,7 @@ export default function App() {
             </p>
           </div>
         </section>
-      </section>
+      </A4Page>
 
       {/* Page 3 */}
       <A4Page pageNumber={3}>
@@ -639,5 +627,6 @@ export default function App() {
         </div>
       </div>
     </div>
-  );
+  </AuthGate>
+);
 }

@@ -1,0 +1,20 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and consent",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "acceptedTerms": { "type": "boolean" }
+      },
+      "required": ["email", "acceptedTerms"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile and consent"
+    }
+  }
+}

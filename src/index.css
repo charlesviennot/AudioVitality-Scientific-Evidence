@@ -17,8 +17,9 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  section {
+  section, .pdf-page-break {
     break-inside: avoid;
+    break-after: always;
   }
 }
 

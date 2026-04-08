@@ -13,7 +13,7 @@ const getStatusConfig = (status: string) => {
 
 export const EvidenceGrid = ({ data }: { data: any[] }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-4">
       {data.map((item, i) => {
         const { icon: Icon, color, bg, border } = getStatusConfig(item.status);
         return (

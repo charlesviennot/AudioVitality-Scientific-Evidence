@@ -26,13 +26,13 @@ export default function App() {
       const opt = {
         margin:       0,
         filename:     'AudioVitality_Scientific_Evidence.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
+        image:        { type: 'png' as const, quality: 0.98 },
         html2canvas:  { scale: 2, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        jsPDF:        { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const },
         pagebreak:    { mode: 'css' }
       };
       
-      await html2pdf().set(opt as any).from(element).save();
+      await html2pdf().set(opt).from(element).save();
     } catch (error) {
       console.error("Error generating PDF:", error);
     } finally {
@@ -45,9 +45,9 @@ export default function App() {
     <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-hidden">
       {/* Ambient Background */}
       <div className="fixed inset-0 z-0 pointer-events-none no-print">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-300/20 blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-300/20 blur-[120px]"></div>
-        <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-orange-200/20 blur-[120px]"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(147,197,253,0.2)] blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(216,180,254,0.2)] blur-[120px]"></div>
+        <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-[rgba(254,215,170,0.2)] blur-[120px]"></div>
       </div>
       <div className="relative z-10">
       
@@ -63,7 +63,7 @@ export default function App() {
         </span>
       </button>
 
-      <div ref={contentRef} className="pdf-content-wrapper flex flex-col gap-8">
+      <div ref={contentRef} className="pdf-content-wrapper">
 
       {/* Page 1: Intro */}
       <A4Page pageNumber={1} className="bg-[#fbfbfd]">
@@ -71,7 +71,7 @@ export default function App() {
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1d1d1f 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
         <Header />
         
-        <div className="relative text-center mt-4 mb-20 py-12">
+        <div className="relative text-center mt-16 mb-20 py-12">
           {/* Audio Bars Background */}
           <div className="absolute inset-0 flex justify-center items-center gap-[3px] opacity-30 pointer-events-none">
             {[...Array(50)].map((_, i) => {

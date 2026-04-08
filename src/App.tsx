@@ -24,12 +24,12 @@ export default function App() {
     try {
       const element = contentRef.current;
       const opt = {
-        margin:       0,
+        margin:       [10, 10, 10, 10], // Add small margins to prevent edge clipping
         filename:     'AudioVitality_Scientific_Evidence.pdf',
         image:        { type: 'png' as const, quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        html2canvas:  { scale: 2, useCORS: true, logging: false, scrollY: 0 },
         jsPDF:        { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const },
-        pagebreak:    { mode: 'css' }
+        pagebreak:    { mode: ['css', 'legacy'], avoid: '.pdf-page-break' }
       };
       
       await html2pdf().set(opt).from(element).save();
@@ -51,18 +51,6 @@ export default function App() {
       </div>
       <div className="relative z-10">
       
-      {/* Floating Print Button */}
-      <button 
-        onClick={handleDownloadPdf}
-        disabled={isGenerating}
-        className="fixed bottom-8 right-8 bg-[#1d1d1f] text-white p-4 rounded-full shadow-2xl hover:bg-black transition-all z-50 no-print flex items-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
-      >
-        {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap font-medium">
-          {isGenerating ? 'Generating PDF...' : 'Download PDF'}
-        </span>
-      </button>
-
       <div ref={contentRef} className="pdf-content-wrapper">
 
       {/* Page 1: Intro */}

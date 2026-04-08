@@ -4,6 +4,7 @@ import html2pdf from 'html2pdf.js';
 import { useRef, useState } from 'react';
 import { A4Page } from './components/A4Page';
 import { Header } from './components/Header';
+import { MainLogo } from './components/MainLogo';
 import { EvidenceGrid } from './components/EvidenceGrid';
 import { ModalityChart, StudiesChart, PilotChart } from './components/Charts';
 import { tableDataPart1, tableDataPart2, tableDataPart3 } from './data/tables';
@@ -85,13 +86,8 @@ export default function App() {
             })}
           </div>
           
-          <h2 className="text-6xl font-bold tracking-tight text-[#1d1d1f] mb-2 relative z-10">
-            AudioVitality
-          </h2>
-          <h2 className="text-6xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-orange-500 mb-6 relative z-10 pb-2">
-            Scientific Evidence
-          </h2>
-          <p className="text-xl text-[#515154] font-medium max-w-3xl mx-auto relative z-10">
+          <MainLogo className="w-full max-w-2xl mx-auto relative z-10" />
+          <p className="text-xl text-[#515154] font-medium max-w-3xl mx-auto relative z-10 mt-6">
             Science-backed low-frequency technology for recovery, performance, and wellbeing.
           </p>
         </div>

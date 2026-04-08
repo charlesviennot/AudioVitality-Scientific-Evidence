@@ -11,20 +11,10 @@ export const ModalityChart = () => {
   ];
 
   return (
-    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">HRV Response by Recovery Modality</h4>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 60, left: 80, bottom: 5 }}>
-          <defs>
-            <linearGradient id="avGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#3b82f6" />
-              <stop offset="100%" stopColor="#8b5cf6" />
-            </linearGradient>
-            <linearGradient id="grayGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#e5e7eb" />
-              <stop offset="100%" stopColor="#d1d5db" />
-            </linearGradient>
-          </defs>
           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
           <XAxis type="number" hide />
           <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#86868b', fontSize: 12, fontWeight: 500 }} />
@@ -36,7 +26,7 @@ export const ModalityChart = () => {
           <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={24}>
             <LabelList dataKey="label" position="right" fill="#515154" fontSize={12} fontWeight={600} />
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.name === 'AudioVitality' ? 'url(#avGradient)' : 'url(#grayGradient)'} />
+              <Cell key={`cell-${index}`} fill={entry.name === 'AudioVitality' ? '#3b82f6' : '#9ca3af'} />
             ))}
           </Bar>
         </BarChart>
@@ -55,20 +45,10 @@ export const StudiesChart = () => {
   ];
 
   return (
-    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">HRV Improvement Across Completed Studies</h4>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 30, right: 0, left: -20, bottom: 20 }}>
-          <defs>
-            <linearGradient id="avGradientVert" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3b82f6" />
-              <stop offset="100%" stopColor="#8b5cf6" />
-            </linearGradient>
-            <linearGradient id="grayGradientVert" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#9ca3af" />
-              <stop offset="100%" stopColor="#d1d5db" />
-            </linearGradient>
-          </defs>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
           <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#86868b', fontSize: 11, fontWeight: 500 }} dy={10} />
           <YAxis axisLine={false} tickLine={false} tick={{ fill: '#86868b', fontSize: 11 }} tickFormatter={(val) => `${val}%`} />
@@ -80,7 +60,7 @@ export const StudiesChart = () => {
           <Bar dataKey="value" radius={[6, 6, 0, 0]} barSize={36}>
             <LabelList dataKey="value" position="top" formatter={(val: number) => `+${val}%`} fill="#515154" fontSize={12} fontWeight={600} dy={-5} />
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.type === 'Published' ? 'url(#avGradientVert)' : 'url(#grayGradientVert)'} />
+              <Cell key={`cell-${index}`} fill={entry.type === 'Published' ? '#3b82f6' : '#9ca3af'} />
             ))}
           </Bar>
         </BarChart>
@@ -116,20 +96,10 @@ export const PilotChart = () => {
   ];
 
   return (
-    <div className="h-[240px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+    <div className="h-[240px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">Airline Pilot Case Study — 4-Week With vs. Without App</h4>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 50, left: 120, bottom: 5 }}>
-          <defs>
-            <linearGradient id="posGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#3b82f6" />
-              <stop offset="100%" stopColor="#8b5cf6" />
-            </linearGradient>
-            <linearGradient id="negGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#f97316" />
-              <stop offset="100%" stopColor="#ef4444" />
-            </linearGradient>
-          </defs>
           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
           <XAxis type="number" hide domain={[-50, 40]} />
           <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#86868b', fontSize: 12, fontWeight: 500 }} />
@@ -142,7 +112,7 @@ export const PilotChart = () => {
           <Bar dataKey="value" radius={6} barSize={20}>
             <LabelList content={<CustomPilotLabel />} />
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.value > 0 ? 'url(#posGradient)' : 'url(#negGradient)'} />
+              <Cell key={`cell-${index}`} fill={entry.value > 0 ? '#3b82f6' : '#f97316'} />
             ))}
           </Bar>
         </BarChart>

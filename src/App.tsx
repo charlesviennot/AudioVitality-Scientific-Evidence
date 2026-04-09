@@ -1,5 +1,7 @@
-import React from 'react';
-import { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { onAuthStateChanged, User, signOut } from 'firebase/auth';
+import { auth } from './firebase';
+import { Login } from './components/Login';
 import { A4Page } from './components/A4Page';
 import { Header } from './components/Header';
 import { MainLogo } from './components/MainLogo';
@@ -9,6 +11,37 @@ import { tableDataPart1, tableDataPart2, tableDataPart3 } from './data/tables';
 
 export default function App() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f5f5f7] flex justify-center items-center">
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Login onLogin={() => {}} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-hidden">
@@ -18,6 +51,18 @@ export default function App() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(216,180,254,0.2)] blur-[120px]"></div>
         <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-[rgba(254,215,170,0.2)] blur-[120px]"></div>
       </div>
+      
+      {/* Logout Button */}
+      <div className="fixed top-4 right-4 z-50 no-print">
+        <button 
+          onClick={handleLogout}
+          className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm hover:bg-gray-50 transition-colors flex items-center gap-2"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+          Déconnexion
+        </button>
+      </div>
+
       <div className="relative z-10">
       
       <div ref={contentRef} className="pdf-content-wrapper">

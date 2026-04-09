@@ -13,7 +13,7 @@ export const tableDataPart1 = [
     n: '1',
     finding: '+21% HRV / -38% night awake duration / +15% sleep performance',
     publication: 'Internal (2025)',
-    implications: 'Demonstrates that AV App can increase sleep performance and recovery during long air travel period reducing jetlag impact.'
+    implications: 'Illustrative case study — not statistically powered. Results directionally consistent with controlled studies. Demonstrates that AV App can increase sleep performance and recovery during long air travel period reducing jetlag impact.'
   },
   {
     study: 'NIRS inflammation',
@@ -21,7 +21,7 @@ export const tableDataPart1 = [
     n: '8',
     finding: '+10–15% SmO₂',
     publication: 'Internal (2025)',
-    implications: 'Demonstrates improved local blood flow and tissue oxygenation. Supports claims around muscle recovery, reduced inflammation.'
+    implications: 'Mechanistic pilot study — designed to identify signal and dose response, not power a population-level claim. Effects consistent across all 8 participants. Demonstrates improved local blood flow and tissue oxygenation. Supports claims around muscle recovery, reduced inflammation.'
   },
   {
     study: 'Lausanne Sport ’24',
@@ -40,7 +40,7 @@ export const tableDataPart2 = [
     n: '19 AV / 10 control',
     finding: '+37% HRV / +12% sustained difference',
     publication: 'Manuscript in prep (2026)',
-    implications: 'Demonstrates cumulative benefits over a competitive season. Indicates that regular use creates sustained recovery advantage.'
+    implications: 'Control group: 10 players, identical training schedule. Between-group sustained HRV advantage: +12%. Demonstrates cumulative benefits over a competitive season. Indicates that regular use creates sustained recovery advantage.'
   },
   {
     study: 'Yverdon Sport ’23/24',
@@ -54,7 +54,7 @@ export const tableDataPart2 = [
     study: 'Long COVID',
     status: 'Ongoing',
     n: '20 patients',
-    finding: 'Autonomic restoration, -46% symptom intensity',
+    finding: 'Autonomic restoration, -46% symptom intensity (anticipated endpoint)',
     publication: 'Completion Q1 2026',
     implications: 'Expands applicability beyond sport into medical-adjacent markets. Opens pathway to wellbeing support in post-viral recovery.'
   },
@@ -76,10 +76,10 @@ export const tableDataPart2 = [
   },
   {
     study: 'Corporate Stress RCT',
-    status: 'Planned',
+    status: 'Ongoing',
     n: '40',
     finding: 'HRV, stress, sleep endpoints',
-    publication: 'Launch Q1 2026',
+    publication: 'ONGOING (Launched April 2026)',
     implications: 'Targets corporate wellness budgets with measurable ROI metrics. Supports enterprise sales and SaaS analytics positioning.'
   }
 ];
@@ -90,7 +90,7 @@ export const tableDataPart3 = [
     status: 'Planned',
     n: '15–20 patients',
     finding: 'Microcirculation + inflammation',
-    publication: 'Seeking partners/funding',
+    publication: 'Seeking clinical partners and funding.',
     implications: 'Explores autoimmune and inflammatory applications. Broadens long-term clinical relevance and strengthens medical credibility.'
   },
   {
@@ -105,7 +105,7 @@ export const tableDataPart3 = [
     study: 'LFVSS narrative review',
     status: 'Under publication',
     n: 'x',
-    finding: 'Significant effects on heath',
+    finding: 'Significant effects on health',
     publication: 'Q1',
     implications: 'By precisely targeting mechanoreceptor populations, LFVSS offers a scalable solution for improving sports performance, managing stress-related autonomic dysfunction.'
   }

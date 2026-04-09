@@ -90,7 +90,7 @@ export default function App() {
           
           <MainLogo className="w-full max-w-2xl mx-auto relative z-10" />
           <p className="text-xl text-[#515154] font-medium max-w-3xl mx-auto relative z-10 mt-6">
-            Science-backed low-frequency technology for recovery, performance, and wellbeing.
+            A physiological modulation platform. Clinically validated. Autonomic regulation at scale.
           </p>
         </div>
         
@@ -105,13 +105,16 @@ export default function App() {
             </p>
             <p className="font-semibold text-[#1d1d1f] text-lg">AudioVitality addresses this gap.</p>
             <p>
-              Our system delivers calibrated low-frequency vibroacoustic stimulation (40–80 Hz) in a controlled studio environment. During a 40-minute session, gentle sound vibrations stimulate sensory receptors in the body, activating vagal pathways that shift the nervous system from "fight-or-flight" into "rest-and-repair." This shift is objectively measurable through Heart Rate Variability (HRV), a gold-standard biomarker of recovery readiness.
+              Our system delivers calibrated low-frequency vibroacoustic stimulation (LFVSS) in a controlled studio environment. During a 40-minute session, calibrated low-frequency vibrations stimulate sensory receptors in the body, activating vagal pathways that shift the autonomic balance toward parasympathetic dominance. This shift is objectively measurable through Heart Rate Variability (HRV), a gold-standard biomarker of recovery readiness.
             </p>
             <p>
-              In a published randomised controlled trial conducted with Lausanne University Hospital (CHUV), a single session produced approximately a 43% improvement in global HRV compared to control conditions. The intervention generated a stronger parasympathetic rebound effect than passive rest and outperformed common recovery modalities such as cold immersion and massage in autonomic response metrics. No adverse effects were reported.
+              In a published randomised controlled trial conducted with Lausanne University Hospital (CHUV), a single session produced approximately a 43% improvement in global HRV compared to control conditions. The intervention generated a stronger parasympathetic rebound effect than passive rest and outperformed common recovery modalities such as cold immersion and massage in autonomic response metrics (see HRV comparison chart, p.9). No adverse effects were reported.
             </p>
             <p>
-              Field validation in elite football environments demonstrated consistent acute HRV increases of over 30% per session over 9 weeks, alongside reductions in perceived fatigue and muscle soreness. A full-season study showed cumulative benefits in sleep efficiency and recovery stability across competitive periods. Additional internal mechanistic testing using near-infrared spectroscopy indicated improved local tissue oxygenation, supporting recovery and anti-inflammatory effects.
+              Field validation in elite football environments demonstrated consistent acute HRV increases of over 30% per session over 9 weeks, alongside reductions in perceived fatigue and muscle soreness. A full-season study showed cumulative benefits in sleep efficiency and recovery stability across competitive periods. Additional internal mechanistic testing using near-infrared spectroscopy demonstrated improved local tissue oxygenation, supporting recovery and anti-inflammatory effects.
+            </p>
+            <p className="pt-4 border-t border-gray-100 mt-6 font-medium">
+              The following pages detail our regulatory strategy, clinical evidence, and ongoing research programs.
             </p>
           </div>
         </section>
@@ -127,25 +130,16 @@ export default function App() {
               Beyond its current positioning in performance, recovery, and autonomic regulation, AudioVitality is progressively building a translational research pathway aimed at exploring regulated medical indications.
             </p>
             <p>
-              Among the potential clinical applications, tinnitus represents a particularly promising domain. Chronic tinnitus is increasingly understood as a disorder involving dysregulated auditory processing, increased central neural gain, and heightened autonomic stress responses. These mechanisms create persistent auditory perception accompanied by elevated physiological stress and neural hyperactivity.
+              Among the potential clinical applications, tinnitus represents a particularly promising domain. To date, AudioVitality has generated one of the largest observational datasets currently available for vibroacoustic interventions in tinnitus populations, with 191 treated patients. Outcomes data indicates clinically meaningful improvements in the large majority of cases, assessed via validated THI scoring (mean −22 THI). 84% of patients showed clinically meaningful improvement.
             </p>
             <p>
-              Low-frequency vibroacoustic stimulation may influence several of these mechanisms simultaneously through somatosensory–auditory cross-modal modulation, interaction with brainstem auditory circuits, and activation of parasympathetic pathways involved in autonomic regulation. This multimodal neuromodulatory hypothesis provides a plausible physiological framework for tinnitus modulation.
+              Mechanistically, chronic tinnitus is increasingly understood as a disorder involving dysregulated auditory processing, increased central neural gain, and heightened autonomic stress responses. Low-frequency vibroacoustic stimulation (LFVSS) may influence several of these mechanisms simultaneously through somatosensory–auditory cross-modal modulation, interaction with brainstem auditory circuits, and activation of parasympathetic pathways involved in autonomic regulation.
             </p>
             <p>
-              To explore this potential, AudioVitality has initiated real-world clinical data collection in collaboration with audiology partners. To date, this program has generated one of the largest observational datasets currently available for vibroacoustic interventions in tinnitus populations, with approximately 191 treated patients. Outcomes are monitored using validated instruments including the Tinnitus Handicap Inventory (THI), enabling structured evaluation of changes in perceived tinnitus burden.
-            </p>
-            <p>
-              Early observational outcomes indicate clinically meaningful improvements in tinnitus symptoms in a subset of patients, supporting further investigation through controlled clinical studies. These findings form the basis for the next phase of the scientific roadmap.
-            </p>
-            <p>
-              Building on this foundation, AudioVitality is preparing the next stage of its clinical development program, which includes structured clinical trials and engagement with regulatory experts to assess potential certification pathways under both the European Medical Device Regulation (MDR) and U.S. Food and Drug Administration (FDA) frameworks, including potential 510(k) or De Novo pathways.
+              AudioVitality is currently preparing structured clinical trials and engaging regulatory counsel to assess 510(k) and MDR pathways, with Grand Audition as the designated North American clinical reference partner.
             </p>
             <p>
               This translational strategy follows a partner-led regulatory model, leveraging specialised clinical networks in audiology and neuromodulation to generate regulatory-grade evidence while maintaining the company's current positioning in the non-medical performance and wellbeing markets.
-            </p>
-            <p>
-              If validated through controlled studies and regulatory review, these developments could enable AudioVitality technologies to be deployed as an adjunctive neuromodulation modality within tinnitus care pathways.
             </p>
           </div>
         </section>
@@ -195,45 +189,6 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 4 */}
-      <A4Page pageNumber={4}>
-        <Header />
-        <section className="mb-8">
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
-            <h4 className="font-semibold text-lg text-[#1d1d1f]">Indication-Specific Regulatory Pathways</h4>
-            <p>
-              Where sufficient clinical evidence emerges, AudioVitality may pursue regulatory approval for specific medical indications through established frameworks such as:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>European Medical Device Regulation (MDR)</li>
-              <li>U.S. FDA 510(k) or De Novo pathways</li>
-            </ul>
-            <p>
-              Regulatory certification would apply to specific therapeutic claims, while the broader platform can continue operating within performance and wellbeing markets.
-            </p>
-
-            <h4 className="font-semibold text-lg text-[#1d1d1f] mt-8">Platform Strategy</h4>
-            <p>
-              The long-term vision is to establish AudioVitality as a physiological modulation platform, capable of supporting both:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Performance and recovery applications</li>
-              <li>Regulated medical indications</li>
-            </ul>
-            <p className="mt-6">
-              This layered regulatory approach enables AudioVitality to scale commercially today while progressively unlocking higher-value clinical applications as evidence accumulates.
-            </p>
-
-            <div className="bg-white p-8 rounded-2xl mt-10 border border-gray-100 shadow-sm">
-              <h4 className="font-serif text-xl font-semibold text-[#1d1d1f] mb-3">Positioning Summary</h4>
-              <p className="text-[#515154]">
-                AudioVitality therefore follows a regulatory optionality strategy: enabling immediate commercial deployment in performance and wellbeing markets while progressively building the clinical evidence required for regulated medical indications.
-              </p>
-            </div>
-          </div>
-        </section>
-      </A4Page>
-
       {/* Page 5 */}
       <A4Page pageNumber={5}>
         <Header />
@@ -266,7 +221,7 @@ export default function App() {
               AudioVitality was developed from a simple but rigorous hypothesis: sound can function as a precise physiological intervention.
             </p>
             <p>
-              Over 15+ years of research and development in Switzerland, AudioVitality Sounds® technology has been engineered to deliver targeted low-frequency vibroacoustic stimulation (40–80 Hz) in a controlled and reproducible manner.
+              Over 15+ years of research and development in Switzerland, AudioVitality Sounds® technology has been engineered to deliver targeted low-frequency vibroacoustic stimulation (LFVSS) in a controlled and reproducible manner.
             </p>
             <p>
               Low-frequency vibration activates cutaneous mechanoreceptors (including Meissner and Merkel corpuscles) and stimulates vagal pathways. This mechanical input is translated into measurable parasympathetic activation, reflected by increases in Heart Rate Variability (HRV), a recognized biomarker of autonomic balance and recovery readiness.
@@ -282,7 +237,7 @@ export default function App() {
 
             <h4 className="font-semibold text-[#1d1d1f] mt-8">Key Differentiators</h4>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Harmonic distortion layering to generate specific neural electrical responses</li>
+              <li>Harmonic distortion layering to generate specific neural electrical responses (Patent-pending IP)</li>
               <li>Binaural entrainment components supporting auditory–neural synchronisation</li>
             </ul>
 
@@ -314,7 +269,7 @@ export default function App() {
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>Design: Randomised, within-subject crossover</li>
                 <li>N = 27 healthy, physically active men (18–40 years)</li>
-                <li>Intervention: 40-minute LFV session (40–80 Hz fundamentals + harmonics)</li>
+                <li>Intervention: 40-minute LFVSS session (40–80 Hz fundamentals + harmonics)</li>
                 <li>Control: no-vibration (silence) condition in identical environment</li>
                 <li>Measurements: Polar H10 + Kubios HRV analysis at 6 time points</li>
                 <li>Primary endpoints: LnRMSSD, (LF+HF)/HR ratio</li>
@@ -324,10 +279,10 @@ export default function App() {
             <div className="mt-6">
               <h5 className="font-semibold text-[#1d1d1f] mb-4">Key Results</h5>
               <ul className="list-disc pl-6 space-y-2">
-                <li><span className="font-semibold text-[#1d1d1f]">+166% (LF+HF)/HR increase</span> at 30 min post-LFV vs. +121% after no-vibration.</li>
-                <li><span className="font-semibold text-[#1d1d1f]">+43% global HRV score improvement</span> in LFV condition.</li>
-                <li>Controlled autonomic challenge: LFV produced an acute drop in LnRMSSD during session, followed by a stronger vagal recovery response.</li>
-                <li>Post-session heart rate reduction observed exclusively in LFV condition</li>
+                <li><span className="font-semibold text-[#1d1d1f]">+166% (LF+HF)/HR increase</span> at 30 min post-LFVSS vs. +121% after no-vibration.</li>
+                <li><span className="font-semibold text-[#1d1d1f]">+43% global HRV score improvement</span> in LFVSS condition.</li>
+                <li>Controlled autonomic challenge: LFVSS produced an acute drop in LnRMSSD during session, followed by a stronger vagal recovery response.</li>
+                <li>Post-session heart rate reduction observed exclusively in LFVSS condition</li>
               </ul>
             </div>
           </div>
@@ -370,7 +325,7 @@ export default function App() {
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>N = 8 healthy adults.</li>
                   <li>Exclusion: no structured physical activity within 48h.</li>
-                  <li>Design: within-subject, two consecutive phases (10m baseline, 20m LFV).</li>
+                  <li>Design: within-subject, two consecutive phases (10m baseline, 20m LFVSS).</li>
                   <li>Measurement: MOXY Monitor (NIRS) on vastus lateralis.</li>
                 </ul>
               </div>
@@ -529,8 +484,10 @@ export default function App() {
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.3 Tinnitus Clinical Experience</h4>
               <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Tinnitus: Real-World Clinical Data Informing FDA Strategy</p>
               <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
-                <li>191 patients treated (observational data).</li>
-                <li>Mechanism hypothesis: Modulate auditory processing via cross-modal sensory integration, reduce central hyperactivity, activate parasympathetic pathways.</li>
+                <li>One of the largest observational vibroacoustic tinnitus datasets available.</li>
+                <li>191 patients treated.</li>
+                <li>84% clinically meaningful improvement.</li>
+                <li>Mean THI reduction: −22 points.</li>
                 <li>FDA regulatory strategy: Pathway 510(k) Safety and Performance Based.</li>
               </ul>
             </div>
@@ -632,7 +589,7 @@ export default function App() {
               <p>A measure of the variation in time between heartbeats. Higher HRV generally indicates better recovery, stronger parasympathetic activation, and greater resilience to stress.</p>
             </div>
             <div>
-              <h4 className="font-semibold text-[#1d1d1f] mb-1">LFV (Low-Frequency Vibroacoustic Stimulation)</h4>
+              <h4 className="font-semibold text-[#1d1d1f] mb-1">LFVSS (Low-Frequency Vibroacoustic Stimulation)</h4>
               <p>The delivery of controlled low-frequency sound vibrations (40–80 Hz) through the body to stimulate sensory receptors and influence autonomic function.</p>
             </div>
             <div>

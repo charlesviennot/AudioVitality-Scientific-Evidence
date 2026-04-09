@@ -11,9 +11,9 @@ export const ModalityChart = () => {
   ];
 
   return (
-    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100">
+    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100 relative">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">HRV Response by Recovery Modality</h4>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="85%">
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 60, left: 80, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
           <XAxis type="number" hide />
@@ -31,6 +31,7 @@ export const ModalityChart = () => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      <p className="text-[10px] text-gray-400 absolute bottom-2 right-4">*Comparator data derived from literature review meta-analyses of recovery modalities.</p>
     </div>
   );
 };

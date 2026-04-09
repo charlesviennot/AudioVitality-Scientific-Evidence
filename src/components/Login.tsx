@@ -68,8 +68,12 @@ export function Login({ onLogin }: LoginProps) {
       onLogin();
     } catch (err: any) {
       console.error("Google Auth error:", err);
-      if (err.code !== 'auth/popup-closed-by-user') {
-        setError("Une erreur est survenue lors de la connexion avec Google.");
+      if (err.code === 'auth/unauthorized-domain') {
+        setError(`Domaine non autorisé. Ajoutez "${window.location.hostname}" dans Firebase > Authentication > Settings > Authorized domains.`);
+      } else if (err.code === 'auth/operation-not-supported-in-this-environment') {
+        setError("La connexion par popup est bloquée par le navigateur. Essayez d'ouvrir l'application dans un nouvel onglet.");
+      } else if (err.code !== 'auth/popup-closed-by-user') {
+        setError(`Erreur Google: ${err.message}`);
       }
     } finally {
       setLoading(false);

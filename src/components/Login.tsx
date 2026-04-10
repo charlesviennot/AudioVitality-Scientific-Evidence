@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
-  signInWithPopup 
+  signInWithPopup,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 import { MainLogo } from './MainLogo';
@@ -18,12 +19,14 @@ export function Login({ onLogin }: LoginProps) {
   const [password, setPassword] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setResetMessage(null);
 
     if (!acceptedTerms) {
       setError("Vous devez accepter les conditions générales pour continuer.");
@@ -54,8 +57,36 @@ export function Login({ onLogin }: LoginProps) {
     }
   };
 
+  const handleResetPassword = async () => {
+    setError(null);
+    setResetMessage(null);
+    
+    if (!email) {
+      setError("Veuillez entrer votre adresse email dans le champ ci-dessus pour réinitialiser votre mot de passe.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setResetMessage("Un email de réinitialisation a été envoyé à votre adresse.");
+    } catch (err: any) {
+      console.error("Password reset error:", err);
+      if (err.code === 'auth/user-not-found') {
+        setError("Aucun compte n'est associé à cet email.");
+      } else if (err.code === 'auth/invalid-email') {
+        setError("L'adresse email est invalide.");
+      } else {
+        setError("Erreur lors de l'envoi de l'email de réinitialisation.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleGoogleAuth = async () => {
     setError(null);
+    setResetMessage(null);
     
     if (!acceptedTerms) {
       setError("Vous devez accepter les conditions générales pour continuer.");
@@ -98,6 +129,12 @@ export function Login({ onLogin }: LoginProps) {
             </div>
           )}
 
+          {resetMessage && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-100 text-green-700 rounded-xl text-sm">
+              {resetMessage}
+            </div>
+          )}
+
           <form onSubmit={handleEmailAuth} className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -114,9 +151,20 @@ export function Login({ onLogin }: LoginProps) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Mot de passe
-              </label>
+              <div className="flex justify-between items-center mb-1.5">
+                <label className="block text-sm font-medium text-gray-700">
+                  Mot de passe
+                </label>
+                {isLogin && (
+                  <button
+                    type="button"
+                    onClick={handleResetPassword}
+                    className="text-xs text-blue-600 hover:underline font-medium"
+                  >
+                    Mot de passe oublié ?
+                  </button>
+                )}
+              </div>
               <input
                 type="password"
                 value={password}

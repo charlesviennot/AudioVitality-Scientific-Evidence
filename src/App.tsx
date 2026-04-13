@@ -96,7 +96,7 @@ export default function App() {
         
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Introduction</h2>
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               AudioVitality is a Swiss-developed technology platform that uses precision low-frequency sound vibrations to help the body recover faster, reduce stress, and improve sleep. Our mission is to make nervous-system recovery measurable, repeatable, and scalable across sport, corporate wellbeing, and longevity markets.
             </p>
@@ -125,7 +125,7 @@ export default function App() {
         <Header />
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-4 text-[#1d1d1f]">Translational Research & Regulatory Optionality</h2>
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               Beyond its current positioning in performance, recovery, and autonomic regulation, AudioVitality is progressively building a translational research pathway aimed at exploring regulated medical indications.
             </p>
@@ -150,7 +150,7 @@ export default function App() {
         <Header />
         <section className="mb-8">
           <h3 className="text-2xl font-serif font-semibold mb-4 text-[#1d1d1f]">Regulatory Optionality Strategy</h3>
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               AudioVitality follows a dual-track development strategy designed to balance immediate commercial deployment with long-term clinical validation.
             </p>
@@ -189,8 +189,8 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 5 */}
-      <A4Page pageNumber={5}>
+      {/* Page 4 */}
+      <A4Page pageNumber={4}>
         <Header />
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-2 text-[#1d1d1f]">Publications & Data Summary</h2>
@@ -200,22 +200,22 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 6 */}
-      <A4Page pageNumber={6}>
+      {/* Page 5 */}
+      <A4Page pageNumber={5}>
         <Header />
         <section className="mb-8">
           <EvidenceGrid data={[...tableDataPart2.slice(2), ...tableDataPart3]} />
         </section>
       </A4Page>
 
-      {/* Page 7 */}
-      <A4Page pageNumber={7}>
+      {/* Page 6 */}
+      <A4Page pageNumber={6}>
         <Header />
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Appendix A – Scientific & Clinical Evidence White Paper</h2>
           <h3 className="text-xl font-semibold mb-4 text-[#1d1d1f]">A1. Scientific Foundation</h3>
           
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <h4 className="font-semibold text-[#1d1d1f]">How Low-Frequency Vibroacoustic Stimulation Acts on the Body</h4>
             <p>
               AudioVitality was developed from a simple but rigorous hypothesis: sound can function as a precise physiological intervention.
@@ -251,14 +251,14 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 8 */}
-      <A4Page pageNumber={8}>
+      {/* Page 7 */}
+      <A4Page pageNumber={7}>
         <Header />
         <section className="mb-8">
           <h3 className="text-xl font-semibold mb-2 text-[#1d1d1f]">A2. Completed Studies</h3>
           <p className="text-xs text-[#86868b] mb-6 font-medium uppercase tracking-widest">From Laboratory Proof-of-Concept to Real-World Validation</p>
           
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <h4 className="font-semibold text-lg text-[#1d1d1f]">A2.1 Randomised Controlled Trial (CHUV / UNIL) – Published</h4>
             <p>
               In collaboration with CHUV (Lausanne University Hospital) and UNIL (University of Lausanne), we conducted the first randomized controlled trial on our technology. Results published in Frontiers in Sports and Active Living (June 2025) demonstrate exceptional parasympathetic activation after a single 40-minute session.
@@ -289,8 +289,8 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 9 */}
-      <A4Page pageNumber={9}>
+      {/* Page 8 */}
+      <A4Page pageNumber={8}>
         <Header />
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-8">
@@ -302,7 +302,7 @@ export default function App() {
           </div>
 
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-6">Clinical Significance</h4>
-          <p className="text-[15px] text-[#515154] mb-8">Compared with common recovery modalities:</p>
+          <p className="text-[15px] text-[#515154] mb-8 text-justify">Compared with common recovery modalities:</p>
           
           <ModalityChart />
         </section>
@@ -311,7 +311,7 @@ export default function App() {
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.2 Mechanistic Validation – NIRS Microcirculation Study</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Muscle Oxygenation Study: +10–15% SmO₂ Increase</p>
           
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               With acute HRV effects proven, we investigated underlying microcirculatory mechanisms. Using Near-Infrared Spectroscopy (NIRS), we assessed whether AudioVitality could improve tissue perfusion at rest, a key marker of local inflammatory status and recovery capacity.
             </p>
@@ -342,14 +342,14 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 10 */}
-      <A4Page pageNumber={10}>
+      {/* Page 9 */}
+      <A4Page pageNumber={9}>
         <Header />
         <section className="mb-8">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.3 Elite Sport Validation – Lausanne Sport (2024)</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">100% Session Success Rate: Acute HRV & Recovery Benefits</p>
           
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               We moved from controlled settings into elite sport. In partnership with INEOS Sport and Lausanne Sport FC (Swiss Super League), we monitored recovery sessions throughout a competitive season.
             </p>
@@ -380,14 +380,14 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 11 */}
-      <A4Page pageNumber={11}>
+      {/* Page 10 */}
+      <A4Page pageNumber={10}>
         <Header />
         <section className="mb-8">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.4 Cumulative Mid-Season (Lausanne Sport 2025/26)</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">+37% HRV Increase Over Mid-Season: Sustained Autonomic Advantage</p>
           
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               We evaluated whether regular use yields sustained physiological advantage beyond acute session effects.
             </p>
@@ -420,7 +420,7 @@ export default function App() {
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.5 Longitudinal Validation - Yverdon Sport (Full Season 2023/24)</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Season-Long HRV & Sleep Optimization: The Full-Season Test</p>
           
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               We tracked 8 professional players across an entire season, combining HRV, sleep, and match-day fatigue to assess long-term effects.
             </p>
@@ -446,8 +446,8 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 12 */}
-      <A4Page pageNumber={12}>
+      {/* Page 11 */}
+      <A4Page pageNumber={11}>
         <Header />
         <section className="mb-8">
           <h3 className="text-xl font-semibold mb-2 text-[#1d1d1f]">A3. Ongoing Studies</h3>
@@ -457,7 +457,7 @@ export default function App() {
             <div>
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.1 Long COVID Study</h4>
               <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Post-COVID Dysautonomia: Restoring Autonomic Balance</p>
-              <p className="text-[15px] text-[#515154] leading-relaxed mb-4">
+              <p className="text-[15px] text-[#515154] leading-relaxed mb-4 text-justify">
                 Long COVID often affects autonomic regulation, leading to chronic fatigue and exercise intolerance. Based on our ability to enhance parasympathetic function and HRV in healthy individuals, we partnered with CHUV and Unisanté to test AudioVitality for autonomic restoration.
               </p>
               <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
@@ -470,7 +470,7 @@ export default function App() {
             <div>
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.2 Sleep & Longevity Study (Clinique La Prairie)</h4>
               <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Sleep Optimization in High-Performance Individuals</p>
-              <p className="text-[15px] text-[#515154] leading-relaxed mb-4">
+              <p className="text-[15px] text-[#515154] leading-relaxed mb-4 text-justify">
                 Sleep is a core pillar of longevity medicine. Football studies showed +18% sleep efficiency after sessions. This pilot assesses whether similar improvements occur in an older, high-stress population.
               </p>
               <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
@@ -495,14 +495,14 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 13 */}
-      <A4Page pageNumber={13}>
+      {/* Page 12 */}
+      <A4Page pageNumber={12}>
         <Header />
         <section className="mb-8">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.4 Long-term App effects</h4>
           <p className="text-sm font-bold text-blue-600 mb-6 uppercase tracking-wider">Airline Pilot study</p>
           
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154]">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               <strong className="text-[#1d1d1f]">Objective:</strong> To evaluate the effects of low-frequency sound stimulation on sleep quality improvement following jet lag in an airline pilot.
             </p>
@@ -516,7 +516,7 @@ export default function App() {
 
           <PilotChart />
 
-          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] mt-8">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] mt-8 text-justify">
             <p>
               These findings show a clear improvement in autonomic recovery and sleep quality despite repeated long-distance flights.
             </p>
@@ -527,8 +527,8 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 14 */}
-      <A4Page pageNumber={14}>
+      {/* Page 13 */}
+      <A4Page pageNumber={13}>
         <Header />
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-2 text-[#1d1d1f]">Part III - Planned Studies</h2>
@@ -569,8 +569,8 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 15 */}
-      <A4Page pageNumber={15}>
+      {/* Page 14 */}
+      <A4Page pageNumber={14}>
         <Header />
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-8 text-[#1d1d1f]">Appendix B – Glossary of Terms</h2>

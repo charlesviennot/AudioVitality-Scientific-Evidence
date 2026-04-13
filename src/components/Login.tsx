@@ -29,7 +29,7 @@ export function Login({ onLogin }: LoginProps) {
     setResetMessage(null);
 
     if (!acceptedTerms) {
-      setError("Vous devez accepter les conditions générales pour continuer.");
+      setError("You must accept the terms and conditions to continue.");
       return;
     }
 
@@ -44,13 +44,13 @@ export function Login({ onLogin }: LoginProps) {
     } catch (err: any) {
       console.error("Authentication error:", err);
       if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        setError("Email ou mot de passe incorrect.");
+        setError("Incorrect email or password.");
       } else if (err.code === 'auth/email-already-in-use') {
-        setError("Cet email est déjà utilisé.");
+        setError("This email is already in use.");
       } else if (err.code === 'auth/weak-password') {
-        setError("Le mot de passe doit contenir au moins 6 caractères.");
+        setError("Password must be at least 6 characters.");
       } else {
-        setError("Une erreur est survenue lors de l'authentification.");
+        setError("An error occurred during authentication.");
       }
     } finally {
       setLoading(false);
@@ -62,22 +62,22 @@ export function Login({ onLogin }: LoginProps) {
     setResetMessage(null);
     
     if (!email) {
-      setError("Veuillez entrer votre adresse email dans le champ ci-dessus pour réinitialiser votre mot de passe.");
+      setError("Please enter your email address in the field above to reset your password.");
       return;
     }
 
     setLoading(true);
     try {
       await sendPasswordResetEmail(auth, email);
-      setResetMessage("Un email de réinitialisation a été envoyé à votre adresse.");
+      setResetMessage("A password reset email has been sent to your address.");
     } catch (err: any) {
       console.error("Password reset error:", err);
       if (err.code === 'auth/user-not-found') {
-        setError("Aucun compte n'est associé à cet email.");
+        setError("No account is associated with this email.");
       } else if (err.code === 'auth/invalid-email') {
-        setError("L'adresse email est invalide.");
+        setError("Invalid email address.");
       } else {
-        setError("Erreur lors de l'envoi de l'email de réinitialisation.");
+        setError("Error sending password reset email.");
       }
     } finally {
       setLoading(false);
@@ -89,7 +89,7 @@ export function Login({ onLogin }: LoginProps) {
     setResetMessage(null);
     
     if (!acceptedTerms) {
-      setError("Vous devez accepter les conditions générales pour continuer.");
+      setError("You must accept the terms and conditions to continue.");
       return;
     }
 
@@ -100,11 +100,11 @@ export function Login({ onLogin }: LoginProps) {
     } catch (err: any) {
       console.error("Google Auth error:", err);
       if (err.code === 'auth/unauthorized-domain') {
-        setError(`Domaine non autorisé. Ajoutez "${window.location.hostname}" dans Firebase > Authentication > Settings > Authorized domains.`);
+        setError(`Unauthorized domain. Add "${window.location.hostname}" in Firebase > Authentication > Settings > Authorized domains.`);
       } else if (err.code === 'auth/operation-not-supported-in-this-environment') {
-        setError("La connexion par popup est bloquée par le navigateur. Essayez d'ouvrir l'application dans un nouvel onglet.");
+        setError("Popup sign-in is blocked by the browser. Try opening the app in a new tab.");
       } else if (err.code !== 'auth/popup-closed-by-user') {
-        setError(`Erreur Google: ${err.message}`);
+        setError(`Google Error: ${err.message}`);
       }
     } finally {
       setLoading(false);
@@ -120,7 +120,7 @@ export function Login({ onLogin }: LoginProps) {
           </div>
           
           <h2 className="text-2xl font-serif font-semibold text-center mb-6">
-            {isLogin ? 'Connexion' : 'Créer un compte'}
+            {isLogin ? 'Sign In' : 'Create an Account'}
           </h2>
 
           {error && (
@@ -145,7 +145,7 @@ export function Login({ onLogin }: LoginProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                placeholder="votre@email.com"
+                placeholder="your@email.com"
                 required
               />
             </div>
@@ -153,7 +153,7 @@ export function Login({ onLogin }: LoginProps) {
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <label className="block text-sm font-medium text-gray-700">
-                  Mot de passe
+                  Password
                 </label>
                 {isLogin && (
                   <button
@@ -161,7 +161,7 @@ export function Login({ onLogin }: LoginProps) {
                     onClick={handleResetPassword}
                     className="text-xs text-blue-600 hover:underline font-medium"
                   >
-                    Mot de passe oublié ?
+                    Forgot password?
                   </button>
                 )}
               </div>
@@ -186,7 +186,7 @@ export function Login({ onLogin }: LoginProps) {
                 />
               </div>
               <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer leading-tight">
-                J'accepte les <button type="button" onClick={() => setIsTermsOpen(true)} className="text-blue-600 hover:underline">conditions générales d'utilisation</button> et la politique de confidentialité.
+                I accept the <button type="button" onClick={() => setIsTermsOpen(true)} className="text-blue-600 hover:underline">terms and conditions</button> and privacy policy.
               </label>
             </div>
 
@@ -195,14 +195,14 @@ export function Login({ onLogin }: LoginProps) {
               disabled={loading}
               className="w-full bg-[#1d1d1f] text-white py-3 rounded-xl font-medium hover:bg-black transition-colors disabled:opacity-70 disabled:cursor-not-allowed mt-2"
             >
-              {loading ? 'Chargement...' : (isLogin ? 'Se connecter' : 'S\'inscrire')}
+              {loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}
             </button>
           </form>
 
           <div className="mt-6 flex items-center justify-between">
             <span className="border-b border-gray-200 w-1/5 lg:w-1/4"></span>
             <span className="text-xs text-center text-gray-500 uppercase tracking-wider font-medium">
-              Ou continuer avec
+              Or continue with
             </span>
             <span className="border-b border-gray-200 w-1/5 lg:w-1/4"></span>
           </div>
@@ -230,7 +230,7 @@ export function Login({ onLogin }: LoginProps) {
               }}
               className="text-sm text-blue-600 hover:underline font-medium"
             >
-              {isLogin ? "Vous n'avez pas de compte ? S'inscrire" : "Vous avez déjà un compte ? Se connecter"}
+              {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
             </button>
           </div>
         </div>

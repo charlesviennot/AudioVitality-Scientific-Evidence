@@ -11,27 +11,34 @@ export const ModalityChart = () => {
   ];
 
   return (
-    <div className="h-[280px] w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100 relative">
+    <div className="h-auto w-full mt-8 mb-10 bg-white p-6 rounded-2xl shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col">
       <h4 className="text-sm font-semibold text-center mb-6 text-[#1d1d1f]">HRV Response by Recovery Modality</h4>
-      <ResponsiveContainer width="100%" height="85%">
-        <BarChart data={data} layout="vertical" margin={{ top: 5, right: 60, left: 80, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
-          <XAxis type="number" hide />
-          <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#86868b', fontSize: 12, fontWeight: 500 }} />
-          <Tooltip 
-            cursor={{ fill: '#f8fafc' }} 
-            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-            formatter={(value: number) => [`${value}%`, 'Improvement']} 
-          />
-          <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={24}>
-            <LabelList dataKey="label" position="right" fill="#515154" fontSize={12} fontWeight={600} />
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.name === 'AudioVitality' ? '#3b82f6' : '#9ca3af'} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-      <p className="text-[10px] text-gray-400 absolute bottom-2 right-4">*Comparator data derived from literature review meta-analyses of recovery modalities.</p>
+      <div className="h-[220px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={data} layout="vertical" margin={{ top: 5, right: 60, left: 80, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
+            <XAxis type="number" hide />
+            <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#86868b', fontSize: 12, fontWeight: 500 }} />
+            <Tooltip 
+              cursor={{ fill: '#f8fafc' }} 
+              contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+              formatter={(value: number) => [`${value}%`, 'Improvement']} 
+            />
+            <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={24}>
+              <LabelList dataKey="label" position="right" fill="#515154" fontSize={12} fontWeight={600} />
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.name === 'AudioVitality' ? '#3b82f6' : '#9ca3af'} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-6 pt-4 border-t border-gray-100 text-[9px] text-gray-400 space-y-1.5 leading-tight">
+        <p><span className="font-semibold text-gray-500">Cold Water (CWI):</span> Martins Alves et al. (2025). Cold Water Immersion, Heart Rate Variability and Post-Exercise Recovery: A Systematic Review. Physiotherapy Research International. <a href="https://doi.org/10.1002/pri.70033" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">doi:10.1002/pri.70033</a></p>
+        <p><span className="font-semibold text-gray-500">Active Recovery:</span> Michael et al. (2017). Cardiac Autonomic Responses during Exercise and Post-exercise Recovery Using Heart Rate Variability and Systolic Time Intervals — A Review. Frontiers in Physiology. <a href="https://doi.org/10.3389/fphys.2017.00301" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">doi:10.3389/fphys.2017.00301</a></p>
+        <p><span className="font-semibold text-gray-500">Massage:</span> Mat Isar & Abdullah (2022). Acute massage stimulates parasympathetic activation after a single exhaustive muscle contraction exercise. Journal of Bodywork and Movement Therapies. <a href="https://doi.org/10.1016/j.jbmt.2022.01.009" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">doi:10.1016/j.jbmt.2022.01.009</a></p>
+        <p><span className="font-semibold text-gray-500">Cryotherapy:</span> Hausswirth et al. (2021). Post-exercise Heart Rate Variability: Whole-body Cryotherapy vs. Contrast Water Therapy. International Journal of Sports Medicine. <a href="https://doi.org/10.1055/a-1312-6914" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">doi:10.1055/a-1312-6914</a></p>
+      </div>
     </div>
   );
 };

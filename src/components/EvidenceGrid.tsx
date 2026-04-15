@@ -17,7 +17,7 @@ export const EvidenceGrid = ({ data }: { data: any[] }) => {
       {data.map((item, i) => {
         const { icon: Icon, color, bg, border } = getStatusConfig(item.status);
         return (
-          <div key={i} className={`p-5 rounded-2xl border ${border} bg-white shadow-sm flex flex-col relative overflow-hidden group print:break-inside-avoid h-full`}>
+          <div key={i} className={`p-5 rounded-2xl border ${border} bg-white shadow-sm flex flex-col relative overflow-hidden group print:break-inside-avoid`}>
             <div className={`absolute top-0 right-0 w-32 h-32 rounded-bl-full opacity-30 ${bg} -z-10 transition-transform group-hover:scale-110`} />
             
             <div className="flex justify-between items-start mb-3 gap-2 min-h-[40px]">
@@ -39,13 +39,13 @@ export const EvidenceGrid = ({ data }: { data: any[] }) => {
               </div>
             </div>
             
-            <div className="mb-4 flex-grow">
+            <div className="mb-4 min-h-[64px]">
               <p className="text-[14px] font-bold text-[#1d1d1f] leading-snug">
                 {item.finding}
               </p>
             </div>
             
-            <div className="pt-4 border-t border-gray-50 mt-auto">
+            <div className="pt-4 border-t border-gray-50 flex-grow">
               <div className="flex items-start gap-2">
                 <ArrowRight className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
                 <p className="text-[13px] text-[#515154] leading-relaxed text-justify">

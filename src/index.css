@@ -17,45 +17,13 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  .pdf-page-break {
-    page-break-inside: avoid;
+  section, .pdf-page-break {
     break-inside: avoid;
+    page-break-inside: avoid;
+    break-after: always;
     page-break-after: always;
-    break-after: page;
   }
 }
-
-/* PDF Mode Optimizations */
-.pdf-mode {
-  font-size: 12px !important;
-}
-.pdf-mode .text-\[15px\] { font-size: 13px !important; line-height: 1.5 !important; }
-.pdf-mode .text-\[14px\] { font-size: 12px !important; line-height: 1.4 !important; }
-.pdf-mode .text-\[13px\] { font-size: 11px !important; line-height: 1.4 !important; }
-.pdf-mode .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem !important; }
-.pdf-mode .space-y-12 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem !important; }
-.pdf-mode .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.25rem !important; }
-.pdf-mode .mb-20 { margin-bottom: 2rem !important; }
-.pdf-mode .py-12 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
-.pdf-mode .mt-16 { margin-top: 1.5rem !important; }
-.pdf-mode .mt-20 { margin-top: 2rem !important; }
-.pdf-mode .mb-10 { margin-bottom: 1rem !important; }
-.pdf-mode .mb-8 { margin-bottom: 0.75rem !important; }
-.pdf-mode .mt-8 { margin-top: 0.75rem !important; }
-.pdf-mode .mb-6 { margin-bottom: 0.75rem !important; }
-.pdf-mode .p-8 { padding: 1.25rem !important; }
-.pdf-mode .p-6 { padding: 1rem !important; }
-.pdf-mode .p-5 { padding: 0.875rem !important; }
-.pdf-mode h2.text-3xl { font-size: 1.5rem !important; margin-bottom: 0.75rem !important; }
-.pdf-mode h3.text-2xl { font-size: 1.25rem !important; margin-bottom: 0.5rem !important; }
-.pdf-mode h3.text-xl { font-size: 1.15rem !important; margin-bottom: 0.5rem !important; }
-.pdf-mode h4.text-lg { font-size: 1.05rem !important; margin-bottom: 0.5rem !important; }
-.pdf-mode .h-\[280px\] { height: 200px !important; }
-.pdf-mode .h-\[240px\] { height: 180px !important; }
-.pdf-mode .h-\[220px\] { height: 180px !important; }
-.pdf-mode .gap-8 { gap: 1.25rem !important; }
-.pdf-mode .gap-6 { gap: 0.75rem !important; }
-.pdf-mode .leading-relaxed { line-height: 1.4 !important; }
 
 body.pdf-exporting {
   background: white !important;

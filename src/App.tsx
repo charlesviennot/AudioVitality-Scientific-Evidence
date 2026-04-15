@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
-import { Download, Monitor, FileText } from 'lucide-react';
-import { ViewContext } from './ViewContext';
+import React, { useState, useEffect, useRef } from 'react';
+import { onAuthStateChanged, User, signOut } from 'firebase/auth';
+import { auth } from './firebase';
+import { Login } from './components/Login';
 import { A4Page } from './components/A4Page';
 import { Header } from './components/Header';
 import { MainLogo } from './components/MainLogo';
@@ -10,52 +11,61 @@ import { tableDataPart1, tableDataPart2, tableDataPart3 } from './data/tables';
 
 export default function App() {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [viewMode, setViewMode] = useState<'web' | 'pdf'>('web');
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f5f5f7] flex justify-center items-center">
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Login onLogin={() => {}} />;
+  }
 
   return (
-    <ViewContext.Provider value={viewMode}>
-      <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-x-auto">
-        {/* Ambient Background */}
-        <div className="fixed inset-0 z-0 pointer-events-none no-print">
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(147,197,253,0.2)] blur-[120px]"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(216,180,254,0.2)] blur-[120px]"></div>
-          <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-[rgba(254,215,170,0.2)] blur-[120px]"></div>
-        </div>
+    <div className="min-h-screen bg-[#f5f5f7] py-8 print:py-0 print:bg-white font-sans text-[#1d1d1f] relative overflow-hidden">
+      {/* Ambient Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none no-print">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(147,197,253,0.2)] blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(216,180,254,0.2)] blur-[120px]"></div>
+        <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-[rgba(254,215,170,0.2)] blur-[120px]"></div>
+      </div>
+      
+      {/* Logout Button */}
+      <div className="fixed top-4 right-4 z-50 no-print">
+        <button 
+          onClick={handleLogout}
+          className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm hover:bg-gray-50 transition-colors flex items-center gap-2"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+          Sign Out
+        </button>
+      </div>
 
-        {/* View Mode Toggle */}
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md border border-gray-200 p-1.5 rounded-full shadow-sm flex items-center gap-1 no-print">
-          <button
-            onClick={() => setViewMode('web')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${viewMode === 'web' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
-          >
-            <Monitor className="w-4 h-4" />
-            Vue Web
-          </button>
-          <button
-            onClick={() => setViewMode('pdf')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${viewMode === 'pdf' ? 'bg-blue-50 text-blue-700' : 'text-gray-500 hover:text-gray-900'}`}
-          >
-            <FileText className="w-4 h-4" />
-            Format PDF
-          </button>
-        </div>
-
-        {/* Download Button */}
-        {viewMode === 'pdf' && (
-          <div className="fixed bottom-8 right-8 z-50 no-print">
-            <button
-              onClick={() => window.print()}
-              className="bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all flex items-center gap-2 font-medium"
-            >
-              <Download className="w-5 h-5" />
-              Télécharger en PDF
-            </button>
-          </div>
-        )}
-
-        <div className={`relative z-10 pt-16 ${viewMode === 'pdf' ? 'pdf-mode' : ''}`}>
-        
-        <div ref={contentRef} className="pdf-content-wrapper">
+      <div className="relative z-10">
+      
+      <div ref={contentRef} className="pdf-content-wrapper">
 
       {/* Page 1: Intro */}
       <A4Page pageNumber={1} className="bg-[#fbfbfd]">
@@ -110,7 +120,7 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 2: Translational Research & Regulatory Strategy */}
+      {/* Page 2 */}
       <A4Page pageNumber={2}>
         <Header />
         <section className="mb-8">
@@ -128,72 +138,77 @@ export default function App() {
             <p>
               AudioVitality is currently preparing structured clinical trials and engaging regulatory counsel to assess 510(k) and MDR pathways, with Grand Audition as the designated North American clinical reference partner.
             </p>
+            <p>
+              This translational strategy follows a partner-led regulatory model, leveraging specialised clinical networks in audiology and neuromodulation to generate regulatory-grade evidence while maintaining the company's current positioning in the non-medical performance and wellbeing markets.
+            </p>
           </div>
         </section>
+      </A4Page>
 
-        <section className="mt-10">
+      {/* Page 3 */}
+      <A4Page pageNumber={3}>
+        <Header />
+        <section className="mb-8">
           <h3 className="text-2xl font-serif font-semibold mb-4 text-[#1d1d1f]">Regulatory Optionality Strategy</h3>
           <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               AudioVitality follows a dual-track development strategy designed to balance immediate commercial deployment with long-term clinical validation.
             </p>
             
-            <div className="grid grid-cols-2 gap-8 mt-6">
-              <div>
-                <h4 className="font-semibold text-lg text-[#1d1d1f] mb-3">Immediate Market Deployment</h4>
-                <p className="mb-3">Deployed in environments focused on physiological recovery and autonomic regulation (longevity clinics, elite sport, hospitality).</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Generate commercial revenue</li>
-                  <li>Refine stimulation protocols</li>
-                  <li>Collect large-scale physiological datasets</li>
-                  <li>Continuously improve the platform</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-lg text-[#1d1d1f] mb-3">Translational Clinical Research</h4>
-                <p className="mb-3">Collaborating with academic and clinical partners to investigate potential medical applications.</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Tinnitus and auditory pathway dysregulation</li>
-                  <li>Post-viral dysautonomia (Long COVID)</li>
-                  <li>Stress and burnout in corporate populations</li>
-                  <li>Sleep optimization and recovery physiology</li>
-                </ul>
-              </div>
-            </div>
+            <h4 className="font-semibold text-lg text-[#1d1d1f] mt-8">Immediate Market Deployment</h4>
+            <p>
+              The AudioVitality platform is currently deployed in environments focused on physiological recovery and autonomic regulation, including longevity clinics, elite sport organizations, and hospitality settings.
+            </p>
+            <p>Operating within these markets allows the company to:</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Generate commercial revenue</li>
+              <li>Refine stimulation protocols across diverse user populations</li>
+              <li>Collect large-scale physiological and usage datasets</li>
+              <li>Continuously improve the platform through real-world evidence</li>
+            </ul>
+            <p>
+              This deployment strategy enables rapid adoption while building a substantial body of real-world data.
+            </p>
+            
+            <h4 className="font-semibold text-lg text-[#1d1d1f] mt-8">Translational Clinical Research</h4>
+            <p>
+              In parallel, AudioVitality collaborates with academic and clinical partners to investigate potential medical applications where autonomic dysregulation and sensory processing disturbances play a central role.
+            </p>
+            <p>Research programs currently explore areas such as:</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Tinnitus and auditory pathway dysregulation</li>
+              <li>Post-viral dysautonomia including Long COVID</li>
+              <li>Stress and burnout in corporate populations</li>
+              <li>Sleep optimization and recovery physiology</li>
+              <li>Microcirculatory and inflammatory conditions</li>
+            </ul>
+            <p>
+              These programs generate structured datasets that may support future regulated therapeutic applications.
+            </p>
           </div>
         </section>
       </A4Page>
 
-      {/* Page 3: Evidence Grid Part 1 */}
-      <A4Page pageNumber={3}>
+      {/* Page 4 */}
+      <A4Page pageNumber={4}>
         <Header />
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-2 text-[#1d1d1f]">Publications & Data Summary</h2>
           <h3 className="text-xs font-bold mb-8 text-[#86868b] uppercase tracking-widest">Scientific Evidence White Paper — February 2026</h3>
           
-          <EvidenceGrid data={tableDataPart1} />
+          <EvidenceGrid data={[...tableDataPart1, ...tableDataPart2.slice(0, 2)]} />
         </section>
       </A4Page>
 
-      {/* Page 4: Evidence Grid Part 2 */}
-      <A4Page pageNumber={4}>
-        <Header />
-        <section className="mb-8">
-          <h3 className="text-xl font-semibold mb-6 text-[#1d1d1f]">Ongoing & Completed Studies</h3>
-          <EvidenceGrid data={tableDataPart2} />
-        </section>
-      </A4Page>
-
-      {/* Page 5: Evidence Grid Part 3 */}
+      {/* Page 5 */}
       <A4Page pageNumber={5}>
         <Header />
         <section className="mb-8">
-          <h3 className="text-xl font-semibold mb-6 text-[#1d1d1f]">Planned Studies</h3>
-          <EvidenceGrid data={tableDataPart3} />
+          <EvidenceGrid data={[...tableDataPart2.slice(2), ...tableDataPart3]} />
         </section>
       </A4Page>
 
-      {/* Page 6: Scientific Foundation */}
+      {/* Page 6 */}
       <A4Page pageNumber={6}>
         <Header />
         <section className="mb-8">
@@ -236,7 +251,7 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 7: A2.1 RCT & Chart */}
+      {/* Page 7 */}
       <A4Page pageNumber={7}>
         <Header />
         <section className="mb-8">
@@ -249,32 +264,36 @@ export default function App() {
               In collaboration with CHUV (Lausanne University Hospital) and UNIL (University of Lausanne), we conducted the first randomized controlled trial on our technology. Results published in Frontiers in Sports and Active Living (June 2025) demonstrate exceptional parasympathetic activation after a single 40-minute session.
             </p>
             
-            <div className="grid grid-cols-2 gap-6 mt-6">
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Study Design (Hauser et al., 2025)</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
-                  <li>Design: Randomised, within-subject crossover</li>
-                  <li>N = 27 healthy, physically active men (18–40 years)</li>
-                  <li>Intervention: 40-minute LFVSS session</li>
-                  <li>Control: no-vibration (silence) condition</li>
-                  <li>Measurements: Polar H10 + Kubios HRV analysis</li>
-                </ul>
-              </div>
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Key Results</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
-                  <li><span className="font-semibold text-[#1d1d1f]">+166% (LF+HF)/HR increase</span> at 30 min post-LFVSS.</li>
-                  <li><span className="font-semibold text-[#1d1d1f]">+43% global HRV score improvement</span> in LFVSS condition.</li>
-                  <li>Stronger vagal recovery response.</li>
-                  <li>Post-session heart rate reduction observed exclusively in LFVSS condition</li>
-                </ul>
-              </div>
+            <div className="bg-white p-6 rounded-2xl mt-6 border border-gray-100 shadow-sm">
+              <h5 className="font-semibold text-[#1d1d1f] mb-4">Study Design (Hauser et al., 2025)</h5>
+              <ul className="list-disc pl-6 space-y-2 text-sm">
+                <li>Design: Randomised, within-subject crossover</li>
+                <li>N = 27 healthy, physically active men (18–40 years)</li>
+                <li>Intervention: 40-minute LFVSS session (40–80 Hz fundamentals + harmonics)</li>
+                <li>Control: no-vibration (silence) condition in identical environment</li>
+                <li>Measurements: Polar H10 + Kubios HRV analysis at 6 time points</li>
+                <li>Primary endpoints: LnRMSSD, (LF+HF)/HR ratio</li>
+              </ul>
+            </div>
+
+            <div className="mt-6">
+              <h5 className="font-semibold text-[#1d1d1f] mb-4">Key Results</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><span className="font-semibold text-[#1d1d1f]">+166% (LF+HF)/HR increase</span> at 30 min post-LFVSS vs. +121% after no-vibration.</li>
+                <li><span className="font-semibold text-[#1d1d1f]">+43% global HRV score improvement</span> in LFVSS condition.</li>
+                <li>Controlled autonomic challenge: LFVSS produced an acute drop in LnRMSSD during session, followed by a stronger vagal recovery response.</li>
+                <li>Post-session heart rate reduction observed exclusively in LFVSS condition</li>
+              </ul>
             </div>
           </div>
         </section>
+      </A4Page>
 
-        <section className="mt-8">
-          <div className="flex items-center gap-3 mb-4">
+      {/* Page 8 */}
+      <A4Page pageNumber={8}>
+        <Header />
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-8">
             <span className="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 uppercase tracking-wider">
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path></svg>
               Published (June 2025)
@@ -282,21 +301,17 @@ export default function App() {
             <span className="text-xs text-[#86868b] font-medium">Hauser et al. Front Sports Act Living. 2025 Jun 27;7:1573660.</span>
           </div>
 
-          <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">Clinical Significance</h4>
-          <p className="text-[14px] text-[#515154] mb-4 text-justify">Compared with common recovery modalities:</p>
+          <h4 className="font-semibold text-lg text-[#1d1d1f] mb-6">Clinical Significance</h4>
+          <p className="text-[15px] text-[#515154] mb-8 text-justify">Compared with common recovery modalities:</p>
           
           <ModalityChart />
         </section>
-      </A4Page>
 
-      {/* Page 8: A2.2 & A2.3 */}
-      <A4Page pageNumber={8}>
-        <Header />
-        <section className="mb-8">
+        <section className="mt-16">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.2 Mechanistic Validation – NIRS Microcirculation Study</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Muscle Oxygenation Study: +10–15% SmO₂ Increase</p>
           
-          <div className="space-y-4 text-[15px] leading-relaxed text-[#515154] text-justify">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               With acute HRV effects proven, we investigated underlying microcirculatory mechanisms. Using Near-Infrared Spectroscopy (NIRS), we assessed whether AudioVitality could improve tissue perfusion at rest, a key marker of local inflammatory status and recovery capacity.
             </p>
@@ -304,19 +319,19 @@ export default function App() {
               This internal study revealed a microvascular mechanism: AudioVitality improves local blood flow and oxygen delivery, supporting its anti-inflammatory and recovery-enhancing properties.
             </p>
             
-            <div className="grid grid-cols-2 gap-6 mt-4">
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Study design</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
+            <div className="grid grid-cols-2 gap-8 mt-8">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <h5 className="font-semibold text-[#1d1d1f] mb-4">Study design</h5>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>N = 8 healthy adults.</li>
                   <li>Exclusion: no structured physical activity within 48h.</li>
                   <li>Design: within-subject, two consecutive phases (10m baseline, 20m LFVSS).</li>
                   <li>Measurement: MOXY Monitor (NIRS) on vastus lateralis.</li>
                 </ul>
               </div>
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Results</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <h5 className="font-semibold text-[#1d1d1f] mb-4">Results</h5>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li><span className="font-semibold text-[#1d1d1f]">+10% to +15% SmO₂ increase</span> during AudioVitality vs. baseline.</li>
                   <li>Consistent improvement across participants.</li>
                   <li>Effects occurred independently of exercise.</li>
@@ -325,33 +340,39 @@ export default function App() {
             </div>
           </div>
         </section>
+      </A4Page>
 
-        <section className="mt-10">
+      {/* Page 9 */}
+      <A4Page pageNumber={9}>
+        <Header />
+        <section className="mb-8">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.3 Elite Sport Validation – Lausanne Sport (2024)</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">100% Session Success Rate: Acute HRV & Recovery Benefits</p>
           
-          <div className="space-y-4 text-[15px] leading-relaxed text-[#515154] text-justify">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
-              We moved from controlled settings into elite sport. In partnership with INEOS Sport and Lausanne Sport FC (Swiss Super League), we monitored recovery sessions throughout a competitive season. This study demonstrated real-world reliability: 100% of monitored sessions produced meaningful HRV improvements.
+              We moved from controlled settings into elite sport. In partnership with INEOS Sport and Lausanne Sport FC (Swiss Super League), we monitored recovery sessions throughout a competitive season.
+            </p>
+            <p>
+              This study demonstrated real-world reliability: 100% of monitored sessions produced meaningful HRV improvements.
             </p>
 
-            <div className="grid grid-cols-2 gap-6 mt-4">
-              <div>
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Results - Acute effects</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
-                  <li>100% of sessions improved HRV post-session.</li>
-                  <li>RMSSD increase range: +27.6% to +33.5%.</li>
-                  <li><span className="font-semibold text-[#1d1d1f]">Mean RMSSD increase: +31.3%.</span></li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Subjective recovery</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
-                  <li>Perceived fatigue: -11% (with AV) vs. -5% (without AV).</li>
-                  <li>DOMS: -12% (with AV) vs. -8% (without AV).</li>
-                  <li>Stress: -4% (with AV) vs. +2% worsening (without AV).</li>
-                </ul>
-              </div>
+            <div className="mt-8">
+              <h5 className="font-semibold text-[#1d1d1f] mb-4">Results - Acute effects (100% success rate)</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>100% of sessions improved HRV post-session.</li>
+                <li>RMSSD increase range: +27.6% to +33.5%.</li>
+                <li><span className="font-semibold text-[#1d1d1f]">Mean RMSSD increase: +31.3%.</span></li>
+              </ul>
+            </div>
+
+            <div className="mt-6">
+              <h5 className="font-semibold text-[#1d1d1f] mb-4">Subjective recovery comparison (with AV vs. without AV):</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Perceived fatigue: -11% (with AV) vs. -5% (without AV).</li>
+                <li>DOMS: -12% (with AV) vs. -8% (without AV).</li>
+                <li>Stress: -4% (with AV) vs. +2% worsening (without AV).</li>
+              </ul>
             </div>
           </div>
 
@@ -359,60 +380,62 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 9: A2.4 & A2.5 */}
-      <A4Page pageNumber={9}>
+      {/* Page 10 */}
+      <A4Page pageNumber={10}>
         <Header />
         <section className="mb-8">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.4 Cumulative Mid-Season (Lausanne Sport 2025/26)</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">+37% HRV Increase Over Mid-Season: Sustained Autonomic Advantage</p>
           
-          <div className="space-y-4 text-[15px] leading-relaxed text-[#515154] text-justify">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
-              We evaluated whether regular use yields sustained physiological advantage beyond acute session effects. This study confirmed long-term benefits: players using AudioVitality maintained a <span className="font-semibold text-[#1d1d1f]">+12% HRV advantage</span> versus controls across the mid-season period.
+              We evaluated whether regular use yields sustained physiological advantage beyond acute session effects.
+            </p>
+            <p>
+              This study confirmed long-term benefits: players using AudioVitality maintained a <span className="font-semibold text-[#1d1d1f]">+12% HRV advantage</span> versus controls across the mid-season period.
             </p>
 
-            <div className="grid grid-cols-2 gap-6 mt-4">
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Study design</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
-                  <li>AudioVitality group: 19 players (1 session/week).</li>
-                  <li>Control group: 10 players (no AudioVitality).</li>
-                  <li>Both groups followed identical training and competitive schedules.</li>
-                  <li>Period: mid-season 2025/26 (high-density fixture period).</li>
-                </ul>
-              </div>
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Results</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
-                  <li>Within-group: <span className="font-semibold text-[#1d1d1f]">+37% HRV increase</span> across the period (AV group).</li>
-                  <li>Between-group: <span className="font-semibold text-[#1d1d1f]">+12% sustained HRV difference</span> AV group vs. control.</li>
-                  <li>Subjective recovery: perceived stress (PSS) -12%, DOMS -15% (AV group).</li>
-                </ul>
-              </div>
+            <div className="bg-white p-6 rounded-2xl mt-6 border border-gray-100 shadow-sm">
+              <h5 className="font-semibold text-[#1d1d1f] mb-4">Study design - Comparative observational</h5>
+              <ul className="list-disc pl-6 space-y-2 text-sm">
+                <li>AudioVitality group: 19 players (1 session/week).</li>
+                <li>Control group: 10 players (no AudioVitality).</li>
+                <li>Both groups followed identical training and competitive schedules.</li>
+                <li>Period: mid-season 2025/26 (high-density fixture period).</li>
+              </ul>
+            </div>
+
+            <div className="mt-6">
+              <h5 className="font-semibold text-[#1d1d1f] mb-4">Results - Sustained autonomic advantage</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Within-group: <span className="font-semibold text-[#1d1d1f]">+37% HRV increase</span> across the period (AV group).</li>
+                <li>Between-group: <span className="font-semibold text-[#1d1d1f]">+12% sustained HRV difference</span> AV group vs. control.</li>
+                <li>Subjective recovery: perceived stress (PSS) -12%, DOMS -15% (AV group).</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        <section className="mt-10">
+        <section className="mt-16">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A2.5 Longitudinal Validation - Yverdon Sport (Full Season 2023/24)</h4>
           <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Season-Long HRV & Sleep Optimization: The Full-Season Test</p>
           
-          <div className="space-y-4 text-[15px] leading-relaxed text-[#515154] text-justify">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               We tracked 8 professional players across an entire season, combining HRV, sleep, and match-day fatigue to assess long-term effects.
             </p>
-            <div className="grid grid-cols-2 gap-6 mt-4">
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Acute (per session):</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
+            <div className="grid grid-cols-2 gap-8 mt-6">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <h5 className="font-semibold text-[#1d1d1f] mb-4">Acute (per session):</h5>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>+25% HRV increase after session.</li>
                   <li>+18% sleep efficiency during the night after session.</li>
                   <li>-25% perceived fatigue during the match.</li>
                 </ul>
               </div>
-              <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <h5 className="font-semibold text-[#1d1d1f] mb-3">Chronic (season-long):</h5>
-                <ul className="list-disc pl-5 space-y-1.5 text-sm">
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <h5 className="font-semibold text-[#1d1d1f] mb-4">Chronic (season-long):</h5>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>Consistent improvements after each session.</li>
                   <li>Cumulative effect on sleep efficiency and recovery markers.</li>
                   <li>Significant decrease in perceived match fatigue.</li>
@@ -423,21 +446,21 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 10: A3 Ongoing Studies */}
-      <A4Page pageNumber={10}>
+      {/* Page 11 */}
+      <A4Page pageNumber={11}>
         <Header />
         <section className="mb-8">
           <h3 className="text-xl font-semibold mb-2 text-[#1d1d1f]">A3. Ongoing Studies</h3>
-          <p className="text-sm text-[#86868b] mb-8 font-medium uppercase tracking-widest">Clinical translation in progress</p>
+          <p className="text-sm text-[#86868b] mb-10 font-medium uppercase tracking-widest">Clinical translation in progress</p>
 
-          <div className="space-y-8">
+          <div className="space-y-12">
             <div>
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.1 Long COVID Study</h4>
-              <p className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">Post-COVID Dysautonomia: Restoring Autonomic Balance</p>
-              <p className="text-[14px] text-[#515154] leading-relaxed mb-3 text-justify">
+              <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Post-COVID Dysautonomia: Restoring Autonomic Balance</p>
+              <p className="text-[15px] text-[#515154] leading-relaxed mb-4 text-justify">
                 Long COVID often affects autonomic regulation, leading to chronic fatigue and exercise intolerance. Based on our ability to enhance parasympathetic function and HRV in healthy individuals, we partnered with CHUV and Unisanté to test AudioVitality for autonomic restoration.
               </p>
-              <ul className="list-disc pl-6 space-y-1.5 text-sm text-[#515154]">
+              <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
                 <li>N = 20 participants with confirmed Long COVID (&gt;12 weeks post-infection).</li>
                 <li>Intervention: 10 sessions over 5 weeks (2×/week).</li>
                 <li>Status: Recruitment complete (20/20 enrolled). Data collection ongoing.</li>
@@ -446,11 +469,11 @@ export default function App() {
 
             <div>
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.2 Sleep & Longevity Study (Clinique La Prairie)</h4>
-              <p className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">Sleep Optimization in High-Performance Individuals</p>
-              <p className="text-[14px] text-[#515154] leading-relaxed mb-3 text-justify">
+              <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Sleep Optimization in High-Performance Individuals</p>
+              <p className="text-[15px] text-[#515154] leading-relaxed mb-4 text-justify">
                 Sleep is a core pillar of longevity medicine. Football studies showed +18% sleep efficiency after sessions. This pilot assesses whether similar improvements occur in an older, high-stress population.
               </p>
-              <ul className="list-disc pl-6 space-y-1.5 text-sm text-[#515154]">
+              <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
                 <li>Setting: Clinique La Prairie, Montreux, Switzerland.</li>
                 <li>Population: longevity clinic clients (45–70 years).</li>
                 <li>Preliminary observations (n=5): Reports of deeper, more restorative sleep within 2–3 sessions.</li>
@@ -459,8 +482,8 @@ export default function App() {
 
             <div>
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.3 Tinnitus Clinical Experience</h4>
-              <p className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">Tinnitus: Real-World Clinical Data Informing FDA Strategy</p>
-              <ul className="list-disc pl-6 space-y-1.5 text-sm text-[#515154]">
+              <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Tinnitus: Real-World Clinical Data Informing FDA Strategy</p>
+              <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
                 <li>One of the largest observational vibroacoustic tinnitus datasets available.</li>
                 <li>191 patients treated.</li>
                 <li>84% clinically meaningful improvement.</li>
@@ -472,14 +495,14 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 11: A3.4 Long-term App effects */}
-      <A4Page pageNumber={11}>
+      {/* Page 12 */}
+      <A4Page pageNumber={12}>
         <Header />
         <section className="mb-8">
           <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">A3.4 Long-term App effects</h4>
           <p className="text-sm font-bold text-blue-600 mb-6 uppercase tracking-wider">Airline Pilot study</p>
           
-          <div className="space-y-4 text-[15px] leading-relaxed text-[#515154] text-justify">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] text-justify">
             <p>
               <strong className="text-[#1d1d1f]">Objective:</strong> To evaluate the effects of low-frequency sound stimulation on sleep quality improvement following jet lag in an airline pilot.
             </p>
@@ -493,7 +516,7 @@ export default function App() {
 
           <PilotChart />
 
-          <div className="space-y-4 text-[15px] leading-relaxed text-[#515154] mt-6 text-justify">
+          <div className="space-y-5 text-[15px] leading-relaxed text-[#515154] mt-8 text-justify">
             <p>
               These findings show a clear improvement in autonomic recovery and sleep quality despite repeated long-distance flights.
             </p>
@@ -504,18 +527,18 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 12: Planned Studies */}
-      <A4Page pageNumber={12}>
+      {/* Page 13 */}
+      <A4Page pageNumber={13}>
         <Header />
         <section className="mb-8">
           <h2 className="text-3xl font-serif font-semibold mb-2 text-[#1d1d1f]">Part III - Planned Studies</h2>
-          <h3 className="text-sm font-bold mb-8 text-[#86868b] uppercase tracking-widest">Next-generation clinical protocols</h3>
+          <h3 className="text-sm font-bold mb-10 text-[#86868b] uppercase tracking-widest">Next-generation clinical protocols</h3>
 
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div className="space-y-10">
+            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">Corporate Stress Management RCT</h4>
-              <p className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">Workplace Burnout Prevention: The Corporate De-Stress Trial</p>
-              <ul className="list-disc pl-6 space-y-1.5 text-sm text-[#515154]">
+              <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Workplace Burnout Prevention: The Corporate De-Stress Trial</p>
+              <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
                 <li>N = 40 high-stress corporate employees.</li>
                 <li>Intervention: 10 sessions (2×/week, 40 min each).</li>
                 <li>Primary Endpoints: HRV (RMSSD, LF/HF) via wearables, Perceived stress (PSS-10), Sleep quality (PSQI).</li>
@@ -523,20 +546,20 @@ export default function App() {
               </ul>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">Autoimmune Disease Pilot - Systemic Sclerosis</h4>
-              <p className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">Systemic Sclerosis: Targeting Microcirculation & Inflammation</p>
-              <ul className="list-disc pl-6 space-y-1.5 text-sm text-[#515154]">
+              <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Systemic Sclerosis: Targeting Microcirculation & Inflammation</p>
+              <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
                 <li>Scientific rationale: Vagus nerve activation may support the cholinergic anti-inflammatory pathway.</li>
                 <li>Population: systemic sclerosis patients with Raynaud's phenomenon.</li>
                 <li>Measurements: NIRS (tissue oxygenation), Thermal imaging, HRV, Inflammatory markers.</li>
               </ul>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h4 className="font-semibold text-lg text-[#1d1d1f] mb-2">DOMS Recovery Study – Exercise-Induced Muscle Damage</h4>
-              <p className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">Accelerating Recovery from Delayed Onset Muscle Soreness</p>
-              <ul className="list-disc pl-6 space-y-1.5 text-sm text-[#515154]">
+              <p className="text-sm font-bold text-blue-600 mb-4 uppercase tracking-wider">Accelerating Recovery from Delayed Onset Muscle Soreness</p>
+              <ul className="list-disc pl-6 space-y-2 text-sm text-[#515154]">
                 <li>Exercise protocol: 100 drop jumps from a 60-cm box to induce exercise-induced muscle damage.</li>
                 <li>Intervention: single 40-minute LFVSS session performed 48 hours post-exercise.</li>
                 <li>Expected outcomes: Faster reduction of extracellular edema, earlier restoration of muscle electrical properties, improved neuromuscular performance.</li>
@@ -546,13 +569,13 @@ export default function App() {
         </section>
       </A4Page>
 
-      {/* Page 13: Glossary & Contact */}
-      <A4Page pageNumber={13}>
+      {/* Page 14 */}
+      <A4Page pageNumber={14}>
         <Header />
         <section className="mb-8">
-          <h2 className="text-3xl font-serif font-semibold mb-6 text-[#1d1d1f]">Appendix B – Glossary of Terms</h2>
+          <h2 className="text-3xl font-serif font-semibold mb-8 text-[#1d1d1f]">Appendix B – Glossary of Terms</h2>
           
-          <div className="space-y-5 text-[14px] text-[#515154]">
+          <div className="space-y-6 text-[15px] text-[#515154]">
             <div>
               <h4 className="font-semibold text-[#1d1d1f] mb-1">Autonomic Nervous System (ANS)</h4>
               <p>The part of the nervous system that controls automatic bodily functions such as heart rate, breathing, and stress responses. It has two main branches: "fight-or-flight" (sympathetic) and "rest-and-repair" (parasympathetic).</p>
@@ -584,17 +607,17 @@ export default function App() {
           </div>
         </section>
 
-        <section className="mt-12 pt-6 border-t border-gray-100">
-          <h3 className="text-xl font-semibold mb-4 text-[#1d1d1f]">Contact</h3>
-          <div className="grid grid-cols-2 gap-6 text-[14px] text-[#515154]">
+        <section className="mt-20 pt-8 border-t border-gray-100">
+          <h3 className="text-xl font-semibold mb-6 text-[#1d1d1f]">Contact</h3>
+          <div className="grid grid-cols-2 gap-8 text-[15px] text-[#515154]">
             <div>
               <p className="font-semibold text-[#1d1d1f]">Olivier de Simone</p>
-              <p className="mb-1">CEO</p>
+              <p className="mb-2">CEO</p>
               <a href="mailto:olivier.desimone@audiovitality.com" className="text-blue-600 hover:text-blue-700 transition-colors">olivier.desimone@audiovitality.com</a>
             </div>
             <div>
               <p className="font-semibold text-[#1d1d1f]">Francis Degache</p>
-              <p className="mb-1">Head of Science and Performance</p>
+              <p className="mb-2">Head of Science and Performance</p>
               <a href="mailto:francis.degache@audiovitality.com" className="text-blue-600 hover:text-blue-700 transition-colors">francis.degache@audiovitality.com</a>
             </div>
           </div>
@@ -604,6 +627,5 @@ export default function App() {
         </div>
       </div>
     </div>
-    </ViewContext.Provider>
   );
 }
